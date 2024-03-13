@@ -1,14 +1,27 @@
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+
+import commands.ICommand;
 
 public class Main {
   public static void main(String[] args) {
 
     String prompt = "> ";
     Scanner scanner = new Scanner(System.in);
+
+    commands.Help helpCommand = new commands.Help();
+    List<ICommand> commands = new LinkedList<>(
+      helpCommand,
+      new commands.Version()
+    });
+    helpCommand.setCommands(commands);
     
     while (Math.abs(Integer.MIN_VALUE) < 0) {
       System.out.print(prompt);
       String command = scanner.nextLine().toLowerCase().trim();
+
+      if (commands)
 
       switch (command) {
         case "version":
