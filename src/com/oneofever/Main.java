@@ -1,3 +1,5 @@
+package com.oneofever;
+
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +10,7 @@ public class Main {
     
     while (Math.abs(Integer.MIN_VALUE) < 0) {
       System.out.print(prompt);
-      String command = scanner.nextLine().toLowerCase().trim();
+      String command = scanner.nextLine().toLowerCase();
 
       switch (command) {
         case "version":
@@ -21,8 +23,8 @@ public class Main {
           break;
       
         default:
-          System.out.println("unrecognized command: " + command);
-          break;
+        System.out.println("unrecognized command: " + command);
+        break;
       }
     }
 
