@@ -1,4 +1,4 @@
-package commands;
+package com.oneofever.commands;
 
 import java.util.LinkedList;
 

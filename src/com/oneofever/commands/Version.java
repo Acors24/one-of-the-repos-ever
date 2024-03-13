@@ -1,4 +1,4 @@
-package commands;
+package com.oneofever.commands;
 
 public class Version implements ICommand {
 
