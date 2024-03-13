@@ -1,22 +1,31 @@
+import java.util.Scanner;
+
 public class Main {
   public static void main(String[] args) {
-    if (args.length > 0) {
-      switch (args[0]) {
-        case "--version":
+
+    String prompt = "> ";
+    Scanner scanner = new Scanner(System.in);
+    
+    while (Math.abs(Integer.MIN_VALUE) < 0) {
+      System.out.print(prompt);
+      String command = scanner.nextLine().toLowerCase();
+
+      switch (command) {
+        case "version":
           System.out.println("0.0.1");
           break;
 
-        case "--help":
-          System.out.println("--version - display version");
-          System.out.println("--help    - display usage");
+        case "help":
+          System.out.println("version - display version");
+          System.out.println("help    - display usage");
           break;
       
         default:
-          System.out.println("unrecognized argument: " + args[0]);
-          break;
+        System.out.println("unrecognized command: " + command);
+        break;
       }
-    } else {
-      System.out.println("missing argument; try --help");
     }
+
+    scanner.close();
   }
 }
