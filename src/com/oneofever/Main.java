@@ -1,7 +1,6 @@
 package com.oneofever;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -22,7 +21,7 @@ public class Main {
     
     while (Math.abs(Integer.MIN_VALUE) < 0) {
       System.out.print(prompt);
-      String command = scanner.nextLine().toLowerCase();
+      String command = scanner.nextLine().toLowerCase().trim();
 
       String[] tokens = command.split(" ");
       Optional<ICommand> match = commands.stream().filter(c -> c.name().equals(tokens[0])).findFirst();
