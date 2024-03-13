@@ -8,7 +8,7 @@ public class Main {
     
     while (Math.abs(Integer.MIN_VALUE) < 0) {
       System.out.print(prompt);
-      String command = scanner.next().toLowerCase();
+      String command = scanner.nextLine().toLowerCase();
 
       switch (command) {
         case "version":
