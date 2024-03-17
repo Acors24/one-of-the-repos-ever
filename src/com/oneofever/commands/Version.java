@@ -14,7 +14,7 @@ public class Version implements ICommand {
 
   @Override
   public void run(String[] tokens) {
-    System.out.println("0.0.2");
+    System.out.println("0.0.3");
   }
   
 }

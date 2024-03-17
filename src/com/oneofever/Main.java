@@ -16,6 +16,7 @@ public class Main {
     LinkedList<ICommand> commands = new LinkedList<>();
     commands.add(helpCommand);
     commands.add(new com.oneofever.commands.Version());
+    commands.add(new com.oneofever.commands.Square());
     commands.add(new com.oneofever.commands.Exit());
     
     helpCommand.setCommands(commands);
