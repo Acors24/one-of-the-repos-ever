@@ -50,6 +50,6 @@ public class Triangle implements ICommand {
 
   public String usage() {
     return "Usage:\n" + //
-            "\ttriangle{side | height | area} <value>";
+            "\ttriangle {side | height | area} <value>";
   }
 }
