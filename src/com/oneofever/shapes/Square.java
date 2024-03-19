@@ -11,7 +11,11 @@ public class Square {
   private double diagonal;
   private double area;
 
-  public Square(ArgType type, double value) {
+  public Square(ArgType type, double value) throws IllegalArgumentException {
+    if (value < 0) {
+      throw new IllegalArgumentException("Value must not be negative.");
+    }
+
     switch (type) {
       case Side:
         side = value;
