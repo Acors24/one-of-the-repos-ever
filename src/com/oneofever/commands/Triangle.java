@@ -41,11 +41,16 @@ public class Triangle implements ICommand {
       return;
     }
 
-    com.oneofever.shapes.Triangle triangle = new com.oneofever.shapes.Triangle(argType, value);
+    try {
+      com.oneofever.shapes.Triangle triangle = new com.oneofever.shapes.Triangle(argType, value);
 
-    System.out.println("side = " + triangle.getSide());
-    System.out.println("height = " + triangle.getHeight());
-    System.out.println("area = " + triangle.getArea());
+      System.out.println("side = " + triangle.getSide());
+      System.out.println("height = " + triangle.getHeight());
+      System.out.println("area = " + triangle.getArea());
+    } catch (Exception ex) {
+      System.err.println(ex.getMessage());
+      return;
+    }
   }
 
   public String usage() {

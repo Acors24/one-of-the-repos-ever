@@ -11,7 +11,10 @@ public class Triangle {
   private double height;
   private double area;
 
-  public Triangle(ArgType type, double value) {
+  public Triangle(ArgType type, double value) throws IllegalArgumentException {
+    if (value < 0) {
+      throw new IllegalArgumentException("Value must not be negative.");
+    }
     switch (type) {
       case Side:
         side = value;
