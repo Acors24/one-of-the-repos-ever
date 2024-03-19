@@ -47,7 +47,7 @@ public class Triangle implements ICommand {
       System.out.println("side = " + triangle.getSide());
       System.out.println("height = " + triangle.getHeight());
       System.out.println("area = " + triangle.getArea());
-    } catch (Exception ex) {
+    } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
       return;
     }
