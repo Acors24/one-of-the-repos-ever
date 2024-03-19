@@ -41,11 +41,16 @@ public class Square implements ICommand {
       return;
     }
 
-    com.oneofever.shapes.Square square = new com.oneofever.shapes.Square(argType, value);
-
-    System.out.println("side = " + square.getSide());
-    System.out.println("diagonal = " + square.getDiagonal());
-    System.out.println("area = " + square.getArea());
+    try {
+      com.oneofever.shapes.Square square = new com.oneofever.shapes.Square(argType, value);
+  
+      System.out.println("side = " + square.getSide());
+      System.out.println("diagonal = " + square.getDiagonal());
+      System.out.println("area = " + square.getArea());
+    } catch (Exception ex) {
+      System.err.println(ex.getMessage());
+      return;
+    }
   }
 
   public String usage() {
