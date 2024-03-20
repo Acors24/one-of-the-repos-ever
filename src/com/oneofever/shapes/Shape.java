@@ -1,11 +1,9 @@
 package com.oneofever.shapes;
 
-public abstract class Shape
-{
+public abstract class Shape {
     protected double area;
 
-    double getArea()
-    {
+    double getArea() {
         return area;
     }
 }

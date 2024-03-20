@@ -1,6 +1,6 @@
 package com.oneofever.shapes;
 
-public class Square extends Shape{
+public class Square extends Shape {
   public enum ArgType {
     Side,
     Diagonal,
@@ -27,7 +27,7 @@ public class Square extends Shape{
         side = diagonal / Math.sqrt(2);
         area = side * side;
         break;
-    
+
       case Area:
         area = value;
         side = Math.sqrt(area);
