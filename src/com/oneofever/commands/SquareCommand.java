@@ -2,7 +2,7 @@ package com.oneofever.commands;
 
 import com.oneofever.shapes.Square.ArgType;
 
-public class Square implements ICommand {
+public class SquareCommand implements ICommand {
 
   @Override
   public String name() {

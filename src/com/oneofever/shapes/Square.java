@@ -1,50 +1,54 @@
 package com.oneofever.shapes;
 
 public class Square extends Shape {
-  public enum ArgType {
-    Side,
-    Diagonal,
-    Area
-  }
-
-  private double side;
-  private double diagonal;
-
-  public Square(ArgType type, double value) throws IllegalArgumentException {
-    if (value < 0) {
-      throw new IllegalArgumentException("Value must not be negative.");
+    public enum ArgType {
+        Side,
+        Diagonal,
+        Area
     }
 
-    switch (type) {
-      case Side:
-        side = value;
-        diagonal = side * Math.sqrt(2);
-        area = side * side;
-        break;
+    public Square(ArgType type, double value) throws IllegalArgumentException
+    {
+        super();
 
-      case Diagonal:
-        diagonal = value;
-        side = diagonal / Math.sqrt(2);
-        area = side * side;
-        break;
+        Double side = 0.0;
+        Double diagonal = 0.0;
+        Double area = 0.0;
 
-      case Area:
-        area = value;
-        side = Math.sqrt(area);
-        diagonal = side * Math.sqrt(2);
-        break;
+        switch (type)
+        {
+            case Side:
+                side = value;
+                diagonal = side * Math.sqrt(2);
+                area = side * side;
+                break;
+
+            case Diagonal:
+                diagonal = value;
+                side = diagonal / Math.sqrt(2);
+                area = side * side;
+                break;
+
+            case Area:
+                area = value;
+                side = Math.sqrt(area);
+                diagonal = side * Math.sqrt(2);
+                break;
+        }
+        props.setSides(new Double[]{side});
+        props.setDiagonals(new Double[]{diagonal});
+        props.setArea(area);
     }
-  }
 
-  public double getSide() {
-    return side;
-  }
+    public double getSide() {
+        return props.getSides()[0];
+    }
 
-  public double getDiagonal() {
-    return diagonal;
-  }
+    public double getDiagonal() {
+        return props.getDiagonals()[0];
+    }
 
-  public double getArea() {
-    return area;
-  }
+    public Double getArea() {
+        return props.getArea();
+    }
 }

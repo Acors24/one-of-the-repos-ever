@@ -2,7 +2,7 @@ package com.oneofever.commands;
 
 import com.oneofever.shapes.Triangle.ArgType;
 
-public class Triangle implements ICommand {
+public class TriangleCommand implements ICommand {
 
   @Override
   public String name() {
