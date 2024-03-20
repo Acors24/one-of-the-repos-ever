@@ -1,6 +1,6 @@
 package com.oneofever.shapes;
 
-public class Triangle {
+public class Triangle extends Shape {
   public enum ArgType {
     Side,
     Height,
@@ -9,7 +9,6 @@ public class Triangle {
 
   private double side;
   private double height;
-  private double area;
 
   public Triangle(ArgType type, double value) throws IllegalArgumentException {
     if (value < 0) {
@@ -18,20 +17,20 @@ public class Triangle {
     switch (type) {
       case Side:
         side = value;
-        height = (side * Math.sqrt(3))/2;
-        area = (side * height)/2;
+        height = (side * Math.sqrt(3)) / 2;
+        area = (side * height) / 2;
         break;
 
       case Height:
         height = value;
-        side = height*2 / Math.sqrt(3);
-        area = (side * height)/2;
+        side = height * 2 / Math.sqrt(3);
+        area = (side * height) / 2;
         break;
 
       case Area:
         area = value;
-        side = Math.sqrt(area/Math.sqrt(3))*2;
-        height = (side * Math.sqrt(3))/2;
+        side = Math.sqrt(area / Math.sqrt(3)) * 2;
+        height = (side * Math.sqrt(3)) / 2;
         break;
     }
   }
