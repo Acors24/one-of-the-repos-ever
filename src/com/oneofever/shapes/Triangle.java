@@ -1,6 +1,6 @@
 package com.oneofever.shapes;
 
-public class Triangle {
+public class Triangle extends Shape {
   public enum ArgType {
     Side,
     Height,
@@ -9,7 +9,6 @@ public class Triangle {
 
   private double side;
   private double height;
-  private double area;
 
   public Triangle(ArgType type, double value) throws IllegalArgumentException {
     if (value < 0) {

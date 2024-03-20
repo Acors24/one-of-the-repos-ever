@@ -1,6 +1,6 @@
 package com.oneofever.shapes;
 
-public class Square {
+public class Square extends Shape{
   public enum ArgType {
     Side,
     Diagonal,
@@ -9,7 +9,6 @@ public class Square {
 
   private double side;
   private double diagonal;
-  private double area;
 
   public Square(ArgType type, double value) throws IllegalArgumentException {
     if (value < 0) {
