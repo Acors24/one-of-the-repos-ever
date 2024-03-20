@@ -1,17 +1,17 @@
 package com.oneofever.commands;
 
-import com.oneofever.shapes.Square.ArgType;
+import com.oneofever.shapes.Triangle.ArgType;
 
-public class Square implements ICommand {
+public class TriangleCommand implements ICommand {
 
   @Override
   public String name() {
-    return "square";
+    return "triangle";
   }
 
   @Override
   public String description() {
-    return "display square info";
+    return "display triangle info";
   }
 
   @Override
@@ -23,7 +23,7 @@ public class Square implements ICommand {
 
     ArgType argType = switch (tokens[1]) {
       case "side" -> ArgType.Side;
-      case "diagonal" -> ArgType.Diagonal;
+      case "height" -> ArgType.Height;
       case "area" -> ArgType.Area;
       default -> null;
     };
@@ -41,15 +41,20 @@ public class Square implements ICommand {
       return;
     }
 
-    com.oneofever.shapes.Square square = new com.oneofever.shapes.Square(argType, value);
+    try {
+      com.oneofever.shapes.Triangle triangle = new com.oneofever.shapes.Triangle(argType, value);
 
-    System.out.println("side = " + square.getSide());
-    System.out.println("diagonal = " + square.getDiagonal());
-    System.out.println("area = " + square.getArea());
+      System.out.println("side = " + triangle.getSide());
+      System.out.println("height = " + triangle.getHeight());
+      System.out.println("area = " + triangle.getArea());
+    } catch (IllegalArgumentException ex) {
+      System.err.println(ex.getMessage());
+      return;
+    }
   }
 
   public String usage() {
     return "Usage:\n" + //
-            "\tsquare {side | diagonal | area} <value>";
+            "\ttriangle {side | height | area} <value>";
   }
 }
