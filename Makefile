@@ -13,3 +13,6 @@ clean:
 
 test:
 	mvn test
+
+format:
+	mvn spotless:apply

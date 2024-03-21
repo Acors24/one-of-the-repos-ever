@@ -1,3 +1,4 @@
+/* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
 public class Triangle extends Shape {
@@ -7,16 +8,14 @@ public class Triangle extends Shape {
         Area
     }
 
-    public Triangle(ArgType type, double value) throws IllegalArgumentException
-    {
+    public Triangle(ArgType type, double value) throws IllegalArgumentException {
         super();
 
         Double side = 0.0;
         Double height = 0.0;
         Double area = 0.0;
 
-        switch (type)
-        {
+        switch (type) {
             case Side:
                 side = value;
                 height = (side * Math.sqrt(3)) / 2;
@@ -35,8 +34,8 @@ public class Triangle extends Shape {
                 height = (side * Math.sqrt(3)) / 2;
                 break;
         }
-        props.setSides(new Double[]{side});
-        props.setHeights(new Double[]{height});
+        props.setSides(new Double[] {side});
+        props.setHeights(new Double[] {height});
         props.setArea(area);
     }
 
