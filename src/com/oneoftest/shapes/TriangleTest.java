@@ -36,6 +36,6 @@ class TriangleTest {
         IllegalArgumentException thrown = assertThrows(
            IllegalArgumentException.class,
            () -> new com.oneofever.shapes.Triangle(ArgType.Side, i));
-        assertTrue(thrown.getMessage().contains("Value must not be negative."));
+        assertTrue(thrown.getMessage().contains("Side length cannot be negative."));
     }
 }

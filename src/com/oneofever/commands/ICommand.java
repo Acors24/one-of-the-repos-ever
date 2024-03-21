@@ -1,11 +1,16 @@
 package com.oneofever.commands;
 
-public interface ICommand {
-  
-  String name();
+import java.util.ArrayList;
 
-  String description();
+public abstract class ICommand
+{
+    public ArrayList<CommandInfo> commandInfo = new ArrayList<CommandInfo>();
+    public abstract String[] next(String current);
+    public abstract Integer tokens(String current);
 
-  void run(String[] tokens);
+    public abstract String name();
 
+    public abstract String description();
+
+    public abstract void run(String[] tokens);
 }
