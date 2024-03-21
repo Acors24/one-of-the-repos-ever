@@ -1,19 +1,20 @@
+/* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
 public class Version implements ICommand {
 
-  @Override
-  public String name() {
-    return "version";
-  }
+    @Override
+    public String name() {
+        return "version";
+    }
 
-  @Override
-  public String description() {
-    return "display program version";
-  }
+    @Override
+    public String description() {
+        return "display program version";
+    }
 
-  @Override
-  public void run(String[] tokens) {
-    System.out.println("0.0.5");
-  }
+    @Override
+    public void run(String[] tokens) {
+        System.out.println("0.0.5");
+    }
 }

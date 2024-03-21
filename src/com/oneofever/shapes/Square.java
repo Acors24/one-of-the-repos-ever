@@ -1,3 +1,4 @@
+/* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
 public class Square extends Shape {
@@ -7,16 +8,14 @@ public class Square extends Shape {
         Area
     }
 
-    public Square(ArgType type, double value) throws IllegalArgumentException
-    {
+    public Square(ArgType type, double value) throws IllegalArgumentException {
         super();
 
         Double side = 0.0;
         Double diagonal = 0.0;
         Double area = 0.0;
 
-        switch (type)
-        {
+        switch (type) {
             case Side:
                 side = value;
                 diagonal = side * Math.sqrt(2);
@@ -35,8 +34,8 @@ public class Square extends Shape {
                 diagonal = side * Math.sqrt(2);
                 break;
         }
-        props.setSides(new Double[]{side});
-        props.setDiagonals(new Double[]{diagonal});
+        props.setSides(new Double[] {side});
+        props.setDiagonals(new Double[] {diagonal});
         props.setArea(area);
     }
 
