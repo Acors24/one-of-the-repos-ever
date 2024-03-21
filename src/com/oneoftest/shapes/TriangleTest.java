@@ -1,5 +1,5 @@
 /* (C)2024 - one-of-the-teams-ever */
-package com.oneofever.oneoftest.shapes;
+package com.oneoftest.shapes;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,6 +36,6 @@ class TriangleTest {
                 assertThrows(
                         IllegalArgumentException.class,
                         () -> new com.oneofever.shapes.Triangle(ArgType.Side, i));
-        assertTrue(thrown.getMessage().contains("Value must not be negative."));
+        assertTrue(thrown.getMessage().contains("Side length cannot be negative."));
     }
 }
