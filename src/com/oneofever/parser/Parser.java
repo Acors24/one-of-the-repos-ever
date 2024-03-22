@@ -53,10 +53,8 @@ public class Parser
         Integer looseCnt = 0; //counter for how much more looseargs needed
         Integer groupCnt = 0; // counter for how much more needed in curr group
         Integer groups = 0; // number of groups in curr command
-        // Integer groupsCnt = 0; // number p
         //we might need number of groups needed or we can leave it up to commands to deal with it
         // for now leave it up commands
-        System.out.println("asdsadsadsa");
         for (String a : toParse)
         {
             // if(activeCommand != null ) System.out.println("acname: "+activeCommand.name()+ "acg: "+activeGroupIndex);

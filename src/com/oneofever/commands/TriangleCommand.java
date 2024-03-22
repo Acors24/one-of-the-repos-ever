@@ -3,19 +3,15 @@ package com.oneofever.commands;
 import com.oneofever.shapes.Triangle.ArgType;
 
 public class TriangleCommand extends ICommand {
-/*
-    @Override
-    public String[] next(String current)
+
+    public TriangleCommand()
     {
-        return null;
+        argGroups.add(new ArgGroup("side", "Double", 1));
+        argGroups.add(new ArgGroup("height", "Double", 1));
+        argGroups.add(new ArgGroup("area", "Double", 1));
+        groupNumber = 1;
     }
 
-    @Override
-    public Integer tokens(String current)
-    {
-        return null;
-    }
-*/
     @Override
     public String name() {
         return "triangle";

@@ -1,7 +1,5 @@
 package com.oneofever.commands;
 
-import com.oneofever.commands.CommandInfo;
-
 public class Version extends ICommand
 {
     @Override
