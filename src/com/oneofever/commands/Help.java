@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class Help extends ICommand
 {
     LinkedList<ICommand> commands;
-
+/*
     @Override
     public String[] next(String current)
     {
@@ -17,7 +17,7 @@ public class Help extends ICommand
     {
         return 0;
     }
-
+*/
     @SuppressWarnings("unchecked")
     public void setCommands(LinkedList<ICommand> commands) {
         this.commands = (LinkedList<ICommand>) commands.clone();

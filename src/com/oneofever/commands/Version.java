@@ -4,6 +4,7 @@ import com.oneofever.commands.CommandInfo;
 
 public class Version extends ICommand
 {
+/*
     public Version()
     {
         commandInfo.add(new CommandInfo("version", null, 0));
@@ -20,7 +21,7 @@ public class Version extends ICommand
     {
         return 0;
     }
-
+*/
     @Override
     public String name()
     {

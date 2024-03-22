@@ -17,50 +17,112 @@ public class Parser
         this.commands = commands;
     }
 
-    public Properties parse(String[] toParse) throws ParseException
-    {
-        ArrayList<Double> sides = new ArrayList<Double>();
-        ArrayList<Double> heights = new ArrayList<Double>();
-        ArrayList<Double> diagonals = new ArrayList<Double>();
-        Double area = -1.0;
+    public static boolean isArgumentOfType(String argument, String type) {
+        //na razie zakladam ze type to typ podstawowy
+        try {
+            switch (type) {
+                case "Double":
+                    Double.parseDouble(argument);
+                    return true;
+                case "String":
+                // Always can parse a string
+                    return true;
+                case "Integer":
+                    Integer.parseInt(argument);
+                    return true;
+                // jak bedziemy cos dodawac
+                default:
+                    return false;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
-        int i = 0;
-        String activeModifier = null;
+    //na razie niech zwraca wypelniony icommand, potem pewnie liste icommand
+    public ICommand parse(String[] toParse) throws ParseException
+    {
+
+        // String activeModifier = null;
         ICommand activeCommand = null;
+        Integer activeGroupIndex = -1;
+
         System.out.println(toParse);
-        Boolean end = false;
+        Boolean end = false; //is command finished (we might remove this in the future if we will need more that one command in line)
+
+        Integer looseCnt = 0; //counter for how much more looseargs needed
+        Integer groupCnt = 0; // counter for how much more needed in curr group
+        Integer groups = 0; // number of groups in curr command
+        //we might need number of groups needed or we can leave it up to commands to deal with it
+        // for now leave it up commands
+        System.out.println("asdsadsadsa");
         for (String a : toParse)
         {
-            System.out.println(activeModifier);
+            if(activeCommand != null ) System.out.println("acname: "+activeCommand.name()+ "acg: "+activeGroupIndex);
             if (end) throw new ParseException("Unexpected argument: "+a);
-            if (activeModifier == null)
+            if (activeCommand== null)
             {
                 Optional<ICommand> match = commands.stream().filter(σ -> σ.name().equals(a)).findFirst();
                 if (match.isPresent()) {
                     activeCommand = match.get();
-                    activeModifier = a;
+                    // activeModifier = a;
                 } else {
                    throw new ParseException("Unrecognized command: "+a);
                 }
 
-                Integer tokens = activeCommand.tokens(activeModifier);
-                if (tokens == null) i--;
-                else i = tokens;
+                looseCnt = activeCommand.looseArgsNumber;
+                groupCnt = 0;
+                groups = activeCommand.argGroups.size();
 
-                if (activeCommand.next(activeModifier) == null || tokens == 0) end = true;
+                if (groups+activeCommand.looseArgsNumber == 0) end = true;
                 continue;
             }
-            final String g=activeModifier;
-            String[] possibilities = activeCommand.next(activeModifier);
-            //for(String s : possibilities) System.out.println(s);
-            if (Arrays.stream(possibilities).map(ę -> {return g+ę.toUpperCase();}).anyMatch(a::equals))
-            {
-                activeModifier = a;
+            if(activeGroupIndex<0){
+                activeGroupIndex = Arrays.asList(activeCommand.argGroupsNames()).indexOf(a);
+
+                if(activeGroupIndex>=0){
+                    groupCnt = activeCommand.argGroups.get(activeGroupIndex).number;
+                }
+                else{
+                    if(looseCnt!=0){
+                        //type parse
+                        if(isArgumentOfType(a, activeCommand.argGroups.get(activeGroupIndex).argType)){
+                            activeCommand.looseArgs.add(a);
+                            looseCnt--;
+                            if(looseCnt==0) end = true;
+                        }
+                        else{
+                            throw new ParseException("wrong command argument: "+activeCommand.name()+" arg: "+a);
+                        }
+
+                    }
+                    else{
+                        throw new ParseException("wrong amount of loose args: "+activeCommand.name()+" arg: "+a);
+                    }
+                }
+                continue;
             }
-            continue;
+            //nie spawdzam czy grupa pelna bo wtedy end
+            if(isArgumentOfType(a,activeCommand.argGroups.get(activeGroupIndex).argType)){
+                activeCommand.argGroups.get(activeGroupIndex).contents.add(a);
+                groupCnt--;
+                if(groupCnt==0){
+                    if(looseCnt==0) end=true;
+                    else{
+                        activeGroupIndex = -1;
+                    }
+                }
+            }
+            else{
+                throw new ParseException("wrong command groupargument: "+activeCommand.name()+"arggrop:"+activeCommand.argGroups.get(activeGroupIndex).name+" arg: "+a);
+            }
+
         }
-        //TODO write checks, update props
-        if(sides.isEmpty() && heights.isEmpty() && diagonals.isEmpty() && area < 0) return null;
-        return Properties.create((Double[])sides.toArray(), (Double[])heights.toArray(), (Double[])diagonals.toArray(), area);
+        System.out.println("out of for");
+        System.out.println(activeCommand.name());
+        System.out.println("agidx:"+activeGroupIndex+" groups:"+groups+" loosecnt:"+looseCnt+" groupCnt:"+groupCnt);
+        activeCommand.print();
+
+        return activeCommand;
     }
 }

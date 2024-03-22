@@ -32,12 +32,26 @@ class ParserTest
         test = new Parser(list);
     }
 
+    public boolean compareicommands(ICommand a, ICommand b){
+        if(a.name()!=b.name()) return false;
+        if(a.looseArgsType!=b.looseArgsType) return false;
+        if(a.looseArgs.size()!=b.looseArgs.size()) return false;
+        if(a.argGroups.size()!=b.argGroups.size()) return false;
+
+        for(int i=0;i<a.argGroups.size();i++){
+            if(a.argGroups.get(i).contents.size()!=b.argGroups.get(i).contents.size()) return false;
+        }
+        return true;
+    }
+
     @Test
     @DisplayName("Parses Version command correctly")
     void testValidParseVersion() throws ParseException
     {
-        assertEquals(test.parse(new String[]{"version"}), null);
+        ICommand rett = new Version();
+        assertTrue(compareicommands(test.parse(new String[]{"version"}), rett));
     }
+
 
     @Test
     @DisplayName("Throws exception when failing to parse version")
@@ -52,7 +66,10 @@ class ParserTest
     @DisplayName("Parses Square command correctly")
     void testValidParseSquare() throws ParseException
     {
-        assertEquals(test.parse(new String[]{"square","side","8"}), null);
+        ICommand rett = new SquareCommand();
+        rett.argGroups.get(0).contents.add("8");
+        // assertEquals(test.parse(new String[]{"square","side","8"}), null);
+        assertTrue(compareicommands(test.parse(new String[]{"square","side","8"}),rett));
     }
 
     @Test
@@ -60,7 +77,17 @@ class ParserTest
     void testThrowsParseSquare() {
         ParseException thrown = assertThrows(
            ParseException.class,
-           () -> test.parse(new String[]{"square","side","aaaaaaaaaa","aaaaa"}));
+           () -> test.parse(new String[]{"square","side","1","aaaaa"}));
         assertTrue(thrown.getMessage().contains("Unexpected argument:"));
     }
+
+    @Test
+    @DisplayName("Throws exception when failing to parse square, wrong argtype")
+    void testThrowsParseSquare2() {
+        ParseException thrown = assertThrows(
+           ParseException.class,
+           () -> test.parse(new String[]{"square","side","aaaaaaaaaa","aaaaa"}));
+        assertTrue(thrown.getMessage().contains("wrong command groupargument:"));
+    }
+
 }

@@ -7,13 +7,13 @@ public class SquareCommand extends ICommand {
 
     public SquareCommand()
     {
-        commandInfo.add(new CommandInfo("square", new String[]{"squareSide","squareDiagonal","squareArea"}, 1));
-        commandInfo.add(new CommandInfo("squareSide", new String[]{"double"}, 1));
-        commandInfo.add(new CommandInfo("squareDiagonal", new String[]{"double"}, 1));
-        commandInfo.add(new CommandInfo("squareArea", new String[]{"double"}, 1));
-        commandInfo.add(new CommandInfo("double", null, null));
+        // commandInfo.add(new CommandInfo("square", new String[]{"squareSide","squareDiagonal","squareArea"}, 1));
+        argGroups.add(new ArgGroup("side", "Double", 1));
+        argGroups.add(new ArgGroup("diagonal", "Double", 1));
+        argGroups.add(new ArgGroup("area", "Double", 1));
+        // commandInfo.add(new CommandInfo("double", null, null));
     }
-
+/*
     @Override
     public String[] next(String current)
     {
@@ -35,7 +35,7 @@ public class SquareCommand extends ICommand {
             return null;
         }
     }
-
+*/
     @Override
     public String name() {
         return "square";

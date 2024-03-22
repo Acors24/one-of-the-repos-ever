@@ -1,7 +1,7 @@
 package com.oneofever.commands;
 
 public class Exit extends ICommand {
-
+/*
     @Override
     public String[] next(String current)
     {
@@ -13,7 +13,7 @@ public class Exit extends ICommand {
     {
         return 0;
     }
-
+*/
     @Override
     public String name() {
         return "exit";

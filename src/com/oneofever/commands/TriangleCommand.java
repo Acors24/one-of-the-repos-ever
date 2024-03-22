@@ -3,6 +3,7 @@ package com.oneofever.commands;
 import com.oneofever.shapes.Triangle.ArgType;
 
 public class TriangleCommand extends ICommand {
+/*
     @Override
     public String[] next(String current)
     {
@@ -14,7 +15,7 @@ public class TriangleCommand extends ICommand {
     {
         return null;
     }
-
+*/
     @Override
     public String name() {
         return "triangle";
