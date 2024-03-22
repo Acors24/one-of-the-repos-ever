@@ -23,7 +23,7 @@ public class RectangleCommand extends AbstractCommand {
     }
 
     @Override
-    public void run(String[] tokens){
+    public void run(){
         System.out.println("placeholder rectangle run");
     }
 }

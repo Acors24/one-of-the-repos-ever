@@ -1,6 +1,6 @@
 package com.oneofever.commands;
 
-import com.oneofever.shapes.Triangle.ArgType;
+import com.oneofever.shapes.Triangle;
 import com.oneofever.shapes.Properties;
 
 public class TriangleCommand extends AbstractCommand {
@@ -24,41 +24,20 @@ public class TriangleCommand extends AbstractCommand {
     }
 
     @Override
-    public void run(String[] tokens) {
-        if (tokens.length < 3) {
-            System.err.println("Not enough arguments.\n" + usage());
+    public void run()
+    {
+        try
+        {
+            Triangle triangle = new Triangle(toProperties());
+
+            System.out.println("side = " + triangle.getSide());
+            System.out.println("height = " + triangle.getHeight());
+            System.out.println("area = " + triangle.getArea());
+        }
+        catch (Exception ex)
+        {
+            System.err.println(ex.getMessage());
             return;
-        }
-
-        ArgType argType = switch (tokens[1]) {
-        case "side" -> ArgType.Side;
-        case "height" -> ArgType.Height;
-        case "area" -> ArgType.Area;
-        default -> null;
-        };
-
-        if (argType == null) {
-        System.err.println("Wrong arguments.\n" + usage());
-        return;
-        }
-
-        double value = 0;
-        try {
-        value = Double.parseDouble(tokens[2]);
-        } catch (NumberFormatException ex) {
-        System.err.println("Wrong value format.\n" + usage());
-        return;
-        }
-
-        try {
-        com.oneofever.shapes.Triangle triangle = new com.oneofever.shapes.Triangle(argType, value);
-
-        System.out.println("side = " + triangle.getSide());
-        System.out.println("height = " + triangle.getHeight());
-        System.out.println("area = " + triangle.getArea());
-        } catch (IllegalArgumentException ex) {
-        System.err.println(ex.getMessage());
-        return;
         }
     }
 
@@ -72,31 +51,37 @@ public class TriangleCommand extends AbstractCommand {
     public Properties toProperties()
     {
         Properties props = new Properties();
-        Double side = null;
-        Double height = null;
-        Double area = null;
-        for (ArgGroup arg : argGroups)
+        try
         {
-            Object obj = arg.contents.getFirst();
-            Double value = null;
-            if (obj != null && obj instanceof Double)
+            for (ArgGroup arg : argGroups)
             {
-                value = (Double) obj;
+                if (arg.contents.isEmpty())
+                    continue;
+                Object obj = arg.contents.get(0);
+                Double value = null;
+                if (obj != null)
+                {
+                    value = Double.parseDouble((String)obj);
+                }
+                switch (arg.name)
+                {
+                    case "side":
+                        props.setSides(new Double[]{value});
+                        break;
+                    case "height":
+                        props.setHeights(new Double[]{value});
+                        break;
+                    case "area":
+                        props.setArea(value);
+                        break;
+                    default:
+                        break;
+                }
             }
-            switch (arg.name)
-            {
-                case "side":
-                    props.setSides(new Double[]{value});
-                    break;
-                case "height":
-                    props.setHeights(new Double[]{value});
-                    break;
-                case "area":
-                    props.setArea(value);
-                    break;
-                default:
-                    break;
-            }
+        }
+        catch (NumberFormatException ex)
+        {
+            System.out.println("Parser failed: "+ex);
         }
         return props;
     }

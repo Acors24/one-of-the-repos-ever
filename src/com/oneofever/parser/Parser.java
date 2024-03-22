@@ -64,7 +64,7 @@ public class Parser
             {
                 Optional<AbstractCommand> match = commands.stream().filter(σ -> σ.name().equals(a)).findFirst();
                 if (match.isPresent()) {
-                    activeCommand = match.get();
+                    activeCommand = match.get().newObject();
                     // activeModifier = a;
                 } else {
                    throw new ParseException("Unrecognized command: "+a);
@@ -145,7 +145,7 @@ public class Parser
         //System.out.println("out of for");
         //System.out.println(activeCommand.name());
         //System.out.println("agidx:"+activeGroupIndex+" groups:"+groups+" loosecnt:"+looseCnt+" groupCnt:"+groupCnt);
-        activeCommand.print();
+        //activeCommand.print();
 
         return activeCommand;
     }

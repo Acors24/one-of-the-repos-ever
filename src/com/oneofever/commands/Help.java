@@ -34,9 +34,17 @@ public class Help extends AbstractCommand
     }
 
     @Override
-    public void run(String[] tokens) {
+    public void run() {
         for (AbstractCommand command : commands) {
         System.err.println(command.name() + " - " + command.description());
         }
+    }
+
+    @Override
+    public Help newObject()
+    {
+        Help newInstance = new Help();
+        newInstance.setCommands(commands);
+        return newInstance;
     }
 }

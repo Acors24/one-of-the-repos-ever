@@ -10,7 +10,8 @@ public abstract class AbstractCommand
     public ArrayList<Object> looseArgs =  new ArrayList<Object>();
     public Integer groupNumber = 0;
     public String looseArgsType = "";
-    public Integer looseArgsNumber =0;
+    public Integer looseArgsNumber = 0;
+
 
     public String[] argGroupsNames(){
         return argGroups.stream().map(x -> x.name).toArray(String[]::new);
@@ -20,19 +21,20 @@ public abstract class AbstractCommand
 
     public abstract String description();
 
-    public void print(){
-        System.out.println("name: "+this.name()+" ArgGroups");
-        for(ArgGroup a: argGroups){
-            a.print();
-        }
-        System.out.print("loose: ");
-        for(Object a: looseArgs){
-            System.out.print(a.toString()+" ");
-        }
-        System.out.println();
-    }
+    // public void print()
+    // {
+    //     System.out.println("name: "+this.name()+" ArgGroups");
+    //     for(ArgGroup a: argGroups){
+    //         a.print();
+    //     }
+    //     System.out.print("loose: ");
+    //     for(Object a: looseArgs){
+    //         System.out.print(a.toString()+" ");
+    //     }
+    //     System.out.println();
+    // }
 
-    public abstract void run(String[] tokens);
+    public abstract void run();
 
     @Override
     public String toString()
@@ -53,5 +55,15 @@ public abstract class AbstractCommand
     public Properties toProperties()
     {
         return null;
+    }
+
+    public AbstractCommand newObject()
+    {
+        try {
+            return this.getClass().getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle exception appropriately
+            return null;
+        }
     }
 }

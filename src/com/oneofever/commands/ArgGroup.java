@@ -14,23 +14,23 @@ public class ArgGroup
         this.number =  number;
     }
 
-    public void print(){
-        System.out.print(name+" cont: ");
-        for(Object a: contents){
-            System.out.print(a.toString()+" ");
-        }
-        System.out.println();
-    }
+    // public void print(){
+    //     System.out.print(name+" cont: ");
+    //     for(Object a: contents){
+    //         System.out.print(a.toString()+" ");
+    //     }
+    //     System.out.println();
+    // }
 
-    @Override
-    public String toString()
-    {
-        StringBuilder s = new StringBuilder();
-        s.append(name+" cont: ");
-        for (Object a : contents)
-        {
-            s.append(a.toString()+" ");
-        }
-        return s.toString().strip();
-    }
+    // @Override
+    // public String toString()
+    // {
+    //     StringBuilder s = new StringBuilder();
+    //     s.append(name+" cont: ");
+    //     for (Object a : contents)
+    //     {
+    //         s.append(a.toString()+" ");
+    //     }
+    //     return s.toString().strip();
+    // }
 }

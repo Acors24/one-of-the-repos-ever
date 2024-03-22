@@ -25,13 +25,21 @@ public class SquareCommand extends AbstractCommand {
     }
 
     @Override
-    public void run(String[] tokens) throws IllegalArgumentException
+    public void run()
     {
-        Square square = new Square(toProperties());
+        try
+        {
+            Square square = new Square(toProperties());
 
-        System.out.println("side = " + square.getSide());
-        System.out.println("diagonal = " + square.getDiagonal());
-        System.out.println("area = " + square.getArea());
+            System.out.println("side = " + square.getSide());
+            System.out.println("diagonal = " + square.getDiagonal());
+            System.out.println("area = " + square.getArea());
+        }
+        catch (Exception ex)
+        {
+            System.err.println(ex.getMessage());
+            return;
+        }
     }
 
     @Override
@@ -44,75 +52,42 @@ public class SquareCommand extends AbstractCommand {
     public Properties toProperties()
     {
         Properties props = new Properties();
-        Double side = null;
-        Double diagonal = null;
-        Double area = null;
-        for (ArgGroup arg : argGroups)
+        try
         {
-            System.out.println(arg);
-            if (arg.contents.isEmpty())
-                continue;
-            Object obj = arg.contents.getFirst();
-            Double value = null;
-            if (obj != null && obj instanceof Double)
+            for (ArgGroup arg : argGroups)
             {
-                value = (Double) obj;
+                if (arg.contents.isEmpty())
+                    continue;
+                Object obj = arg.contents.get(0);
+                Double value = null;
+                if (obj != null)
+                {
+                    value = Double.parseDouble((String)obj);
+                }
+                switch (arg.name)
+                {
+                    case "side":
+                        if(value != null)
+                            props.setSides(new Double[]{value});
+                        break;
+                    case "diagonal":
+                        if(value != null)
+                            props.setDiagonals(new Double[]{value});
+                        break;
+                    case "area":
+                        if(value != null)
+                            props.setArea(value);
+                        break;
+                    default:
+                        break;
+                }
             }
-            switch (arg.name)
-            {
-                case "side":
-                    if(value != null)
-                        props.setSides(new Double[]{value});
-                    break;
-                case "diagonal":
-                    if(value != null)
-                        props.setDiagonals(new Double[]{value});
-                    break;
-                case "area":
-                    if(value != null)
-                        props.setArea(value);
-                    break;
-                default:
-                    break;
-            }
+        }
+        catch (NumberFormatException ex)
+        {
+            System.out.println("Parser failed: "+ex);
         }
         return props;
     }
 }
 
-
-// if (tokens.length < 3) {
-        //     System.err.println("Not enough arguments.\n" + usage());
-        //     return;
-        // }
-        //
-        // ArgType argType = switch (tokens[1]) {
-        //     case "side" -> ArgType.Side;
-        //     case "diagonal" -> ArgType.Diagonal;
-        //     case "area" -> ArgType.Area;
-        //     default -> null;
-        // };
-        //
-        // if (argType == null) {
-        //     System.err.println("Wrong arguments.\n" + usage());
-        //     return;
-        // }
-        //
-        // double value = 0;
-        // try {
-        //     value = Double.parseDouble(tokens[2]);
-        // } catch (NumberFormatException ex) {
-        //     System.err.println("Wrong value format.\n" + usage());
-        //     return;
-        // }
-        //
-        // try {
-        //     com.oneofever.shapes.Square square = new com.oneofever.shapes.Square(argType, value);
-        //
-        //     System.out.println("side = " + square.getSide());
-        //     System.out.println("diagonal = " + square.getDiagonal());
-        //     System.out.println("area = " + square.getArea());
-        // } catch (Exception ex) {
-        //     System.err.println(ex.getMessage());
-        //     return;
-        // }

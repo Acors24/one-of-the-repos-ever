@@ -15,7 +15,7 @@ public class Version extends AbstractCommand
     }
 
     @Override
-    public void run(String[] tokens)
+    public void run()
     {
         System.out.println("0.0.5");
     }

@@ -44,7 +44,7 @@ public class Main {
                 try
                 {
                     parsed = parser.parse(tokens);
-                    parsed.run(tokens);
+                    parsed.run();
                 }
                 catch (ParseException ex) //TODO get command if parse fails, otherwise usage will not be displayed
                 {

@@ -12,7 +12,7 @@ public class Exit extends AbstractCommand {
     }
 
     @Override
-    public void run(String[] tokens) {
+    public void run() {
         System.exit(0);
     }
 }

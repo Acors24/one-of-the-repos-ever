@@ -59,7 +59,11 @@ public class Square extends Shape {
             props.setDiagonals(new Double[]{diagonal});
             i++;
         }
-        if (i!=1)
+        if (i == 0)
+        {
+            throw new IllegalArgumentException("Not enough arguments.");
+        }
+        if (i > 1)
         {
             throw new IllegalArgumentException("Too many arguments.");
         }
