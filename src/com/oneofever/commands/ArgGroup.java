@@ -21,4 +21,16 @@ public class ArgGroup
         }
         System.out.println();
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder s = new StringBuilder();
+        s.append(name+" cont: ");
+        for (Object a : contents)
+        {
+            s.append(a.toString()+" ");
+        }
+        return s.toString().strip();
+    }
 }

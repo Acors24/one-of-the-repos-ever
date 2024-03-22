@@ -1,6 +1,6 @@
 package com.oneofever.commands;
 
-public class Version extends ICommand
+public class Version extends AbstractCommand
 {
     @Override
     public String name()

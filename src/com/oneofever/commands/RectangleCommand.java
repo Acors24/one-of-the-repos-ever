@@ -2,7 +2,7 @@ package com.oneofever.commands;
 
 // import com.oneofever.shapes.Triangle.ArgType;
 
-public class RectangleCommand extends ICommand {
+public class RectangleCommand extends AbstractCommand {
 
     public RectangleCommand()
     {

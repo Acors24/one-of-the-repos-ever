@@ -2,7 +2,7 @@ package com.oneofever.oneoftest.parser;
 
 import com.oneofever.parser.Parser;
 import com.oneofever.parser.ParseException;
-import com.oneofever.commands.ICommand;
+import com.oneofever.commands.AbstractCommand;
 import com.oneofever.commands.Version;
 import com.oneofever.commands.SquareCommand;
 import com.oneofever.commands.RectangleCommand;
@@ -25,17 +25,17 @@ class ParserTest
 
     public ParserTest()
     {
-        ICommand version = new Version();
-        ICommand square = new SquareCommand();
-        ICommand rectangle = new RectangleCommand();
-        LinkedList<ICommand> list = new LinkedList<ICommand>();
+        AbstractCommand version = new Version();
+        AbstractCommand square = new SquareCommand();
+        AbstractCommand rectangle = new RectangleCommand();
+        LinkedList<AbstractCommand> list = new LinkedList<AbstractCommand>();
         list.add(version);
         list.add(square);
         list.add(rectangle);
         test = new Parser(list);
     }
 
-    public boolean compareicommands(ICommand a, ICommand b){
+    public boolean compareAbstractCommands(AbstractCommand a, AbstractCommand b){
         if(a.name()!=b.name()) return false;
         if(a.looseArgsType!=b.looseArgsType) return false;
         if(a.looseArgs.size()!=b.looseArgs.size()) return false;
@@ -51,8 +51,8 @@ class ParserTest
     @DisplayName("Parses Version command correctly")
     void testValidParseVersion() throws ParseException
     {
-        ICommand rett = new Version();
-        assertTrue(compareicommands(test.parse(new String[]{"version"}), rett));
+        AbstractCommand rett = new Version();
+        assertTrue(compareAbstractCommands(test.parse(new String[]{"version"}), rett));
     }
 
 
@@ -69,10 +69,14 @@ class ParserTest
     @DisplayName("Parses Square command correctly")
     void testValidParseSquare() throws ParseException
     {
-        ICommand rett = new SquareCommand();
+        AbstractCommand rett = new SquareCommand();
         rett.argGroups.get(0).contents.add("8");
         // assertEquals(test.parse(new String[]{"square","side","8"}), null);
-        assertTrue(compareicommands(test.parse(new String[]{"square","side","8"}),rett));
+        AbstractCommand parsed = test.parse(new String[]{"square","side","8"});
+        System.out.println("FUCK");
+        System.out.println(parsed);
+        System.out.println("FUCK");
+        assertTrue(compareAbstractCommands(parsed,rett));
     }
 
     @Test
@@ -97,21 +101,21 @@ class ParserTest
     @DisplayName("Parses Rectangle command correctly")
     void testValidParseRectangle() throws ParseException
     {
-        ICommand rett = new RectangleCommand();
+        AbstractCommand rett = new RectangleCommand();
         rett.argGroups.get(0).contents.add("8");
         rett.argGroups.get(0).contents.add("9");
         // assertEquals(test.parse(new String[]{"square","side","8"}), null);
-        assertTrue(compareicommands(test.parse(new String[]{"rectangle","side","8","side","9"}),rett));
+        assertTrue(compareAbstractCommands(test.parse(new String[]{"rectangle","side","8","side","9"}),rett));
     }
 
     @DisplayName("Parses Rectangle command correctly")
     void testValidParseRectangle2() throws ParseException
     {
-        ICommand rett = new RectangleCommand();
+        AbstractCommand rett = new RectangleCommand();
         rett.argGroups.get(1).contents.add("8");
         rett.argGroups.get(2).contents.add("9");
         // assertEquals(test.parse(new String[]{"square","side","8"}), null);
-        assertTrue(compareicommands(test.parse(new String[]{"rectangle","diagonal","8","area","9"}),rett));
+        assertTrue(compareAbstractCommands(test.parse(new String[]{"rectangle","diagonal","8","area","9"}),rett));
     }
 
     @Test

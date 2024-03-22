@@ -1,8 +1,9 @@
 package com.oneofever.commands;
 
 import com.oneofever.shapes.Triangle.ArgType;
+import com.oneofever.shapes.Properties;
 
-public class TriangleCommand extends ICommand {
+public class TriangleCommand extends AbstractCommand {
 
     public TriangleCommand()
     {
@@ -64,5 +65,38 @@ public class TriangleCommand extends ICommand {
     public String usage() {
         return "Usage:\n" + //
                 "\ttriangle {side | height | area} <value>";
+    }
+
+    @Override
+    public Properties toProperties()
+    {
+        Properties props = new Properties();
+        Double side = null;
+        Double height = null;
+        Double area = null;
+        for (ArgGroup arg : argGroups)
+        {
+            Object obj = arg.contents.getFirst();
+            Double value = null;
+            if (obj != null && obj instanceof Double)
+            {
+                value = (Double) obj;
+            }
+            switch (arg.name)
+            {
+                case "side":
+                    props.setSides(new Double[]{value});
+                    break;
+                case "height":
+                    props.setHeights(new Double[]{value});
+                    break;
+                case "area":
+                    props.setArea(value);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return props;
     }
 }

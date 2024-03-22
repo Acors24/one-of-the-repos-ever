@@ -2,17 +2,16 @@ package com.oneofever.commands;
 
 import com.oneofever.shapes.Square.ArgType;
 import java.util.Optional;
+import com.oneofever.shapes.Properties;
 
-public class SquareCommand extends ICommand {
+public class SquareCommand extends AbstractCommand {
 
     public SquareCommand()
     {
-        // commandInfo.add(new CommandInfo("square", new String[]{"squareSide","squareDiagonal","squareArea"}, 1));
         argGroups.add(new ArgGroup("side", "Double", 1));
         argGroups.add(new ArgGroup("diagonal", "Double", 1));
         argGroups.add(new ArgGroup("area", "Double", 1));
         groupNumber = 1;
-        // commandInfo.add(new CommandInfo("double", null, null));
     }
 
     @Override
@@ -67,5 +66,38 @@ public class SquareCommand extends ICommand {
     public String usage() {
         return "Usage:\n" + //
                 "\tsquare {side | diagonal | area} <value>";
+    }
+
+    @Override
+    public Properties toProperties()
+    {
+        Properties props = new Properties();
+        Double side = null;
+        Double diagonal = null;
+        Double area = null;
+        for (ArgGroup arg : argGroups)
+        {
+            Object obj = arg.contents.getFirst();
+            Double value = null;
+            if (obj != null && obj instanceof Double)
+            {
+                value = (Double) obj;
+            }
+            switch (arg.name)
+            {
+                case "side":
+                    props.setSides(new Double[]{value});
+                    break;
+                case "diagonal":
+                    props.setDiagonals(new Double[]{value});
+                    break;
+                case "area":
+                    props.setArea(value);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return props;
     }
 }

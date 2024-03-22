@@ -1,6 +1,6 @@
 package com.oneofever.commands;
 
-public class Exit extends ICommand {
+public class Exit extends AbstractCommand {
     @Override
     public String name() {
         return "exit";

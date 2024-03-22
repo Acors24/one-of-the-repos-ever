@@ -6,13 +6,13 @@ import java.util.Optional;
 import java.util.Arrays;
 
 import com.oneofever.shapes.Properties;
-import com.oneofever.commands.ICommand;
+import com.oneofever.commands.AbstractCommand;
 
 public class Parser
 {
-    LinkedList<ICommand> commands = null;
+    LinkedList<AbstractCommand> commands = null;
 
-    public Parser(LinkedList<ICommand> commands)
+    public Parser(LinkedList<AbstractCommand> commands)
     {
         this.commands = commands;
     }
@@ -39,12 +39,12 @@ public class Parser
         }
     }
 
-    //na razie niech zwraca wypelniony icommand, potem pewnie liste icommand
-    public ICommand parse(String[] toParse) throws ParseException
+    //na razie niech zwraca wypelniony AbstractCommand, potem pewnie liste AbstractCommand
+    public AbstractCommand parse(String[] toParse) throws ParseException
     {
 
         // String activeModifier = null;
-        ICommand activeCommand = null;
+        AbstractCommand activeCommand = null;
         Integer activeGroupIndex = -1;
 
         System.out.println(toParse);
@@ -62,7 +62,7 @@ public class Parser
             //we curretly dont hava a command to parse
             if (activeCommand== null)
             {
-                Optional<ICommand> match = commands.stream().filter(σ -> σ.name().equals(a)).findFirst();
+                Optional<AbstractCommand> match = commands.stream().filter(σ -> σ.name().equals(a)).findFirst();
                 if (match.isPresent()) {
                     activeCommand = match.get();
                     // activeModifier = a;

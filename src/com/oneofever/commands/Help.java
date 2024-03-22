@@ -2,9 +2,9 @@ package com.oneofever.commands;
 
 import java.util.LinkedList;
 
-public class Help extends ICommand
+public class Help extends AbstractCommand
 {
-    LinkedList<ICommand> commands;
+    LinkedList<AbstractCommand> commands;
 /*
     @Override
     public String[] next(String current)
@@ -19,8 +19,8 @@ public class Help extends ICommand
     }
 */
     @SuppressWarnings("unchecked")
-    public void setCommands(LinkedList<ICommand> commands) {
-        this.commands = (LinkedList<ICommand>) commands.clone();
+    public void setCommands(LinkedList<AbstractCommand> commands) {
+        this.commands = (LinkedList<AbstractCommand>) commands.clone();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Help extends ICommand
 
     @Override
     public void run(String[] tokens) {
-        for (ICommand command : commands) {
+        for (AbstractCommand command : commands) {
         System.err.println(command.name() + " - " + command.description());
         }
     }

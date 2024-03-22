@@ -1,8 +1,9 @@
 package com.oneofever.commands;
 
 import java.util.ArrayList;
+import com.oneofever.shapes.Properties;
 
-public abstract class ICommand
+public abstract class AbstractCommand
 {
 
     public ArrayList<ArgGroup> argGroups = new ArrayList<ArgGroup>();
@@ -30,5 +31,22 @@ public abstract class ICommand
         }
         System.out.println();
     }
+
     public abstract void run(String[] tokens);
+
+    @Override
+    public String toString()
+    {
+        StringBuilder a = new StringBuilder();
+        for (ArgGroup arg : argGroups)
+        {
+            a.append(arg+" ");
+        }
+        return a.toString().strip();
+    }
+
+    public Properties toProperties()
+    {
+        return null;
+    }
 }

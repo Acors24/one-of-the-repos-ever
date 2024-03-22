@@ -1,4 +1,4 @@
-package com.oneofever.oneoftest.shapes;
+package com.oneofever.shapes;
 
 import com.oneofever.shapes.Triangle;
 import com.oneofever.shapes.Triangle.ArgType;
@@ -16,12 +16,10 @@ import org.junit.jupiter.api.Test;
 class TriangleTest {
 
     Triangle triangle;
-    double i = 0.0;
 
-    @BeforeEach
-    void setUp() {
+    public TriangleTest()
+    {
         triangle = new com.oneofever.shapes.Triangle(ArgType.Side, 10.0);
-        i-=1.0;
     }
 
     @Test
@@ -30,12 +28,12 @@ class TriangleTest {
         assertEquals(10.0, triangle.getSide());
     }
 
-    @RepeatedTest(5)
+    @Test
     @DisplayName("Cannot build a triangle with negative length side")
     void testNonZero() {
         IllegalArgumentException thrown = assertThrows(
            IllegalArgumentException.class,
-           () -> new com.oneofever.shapes.Triangle(ArgType.Side, i));
+           () -> new com.oneofever.shapes.Triangle(ArgType.Side, -1));
         assertTrue(thrown.getMessage().contains("Side length cannot be negative."));
     }
 }
