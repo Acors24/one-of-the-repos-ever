@@ -72,11 +72,7 @@ class ParserTest
         AbstractCommand rett = new SquareCommand();
         rett.argGroups.get(0).contents.add("8");
         // assertEquals(test.parse(new String[]{"square","side","8"}), null);
-        AbstractCommand parsed = test.parse(new String[]{"square","side","8"});
-        System.out.println("FUCK");
-        System.out.println(parsed);
-        System.out.println("FUCK");
-        assertTrue(compareAbstractCommands(parsed,rett));
+        assertTrue(compareAbstractCommands(test.parse(new String[]{"square","side","8"}),rett));
     }
 
     @Test

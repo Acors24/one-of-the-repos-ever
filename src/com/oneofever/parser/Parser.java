@@ -47,7 +47,7 @@ public class Parser
         AbstractCommand activeCommand = null;
         Integer activeGroupIndex = -1;
 
-        System.out.println(toParse);
+        //System.out.println(toParse);
         Boolean end = false; //is command finished (we might remove this in the future if we will need more that one command in line)
 
         Integer looseCnt = 0; //counter for how much more looseargs needed
@@ -142,9 +142,9 @@ public class Parser
             throw new ParseException("Too few arguments in a group: "+activeCommand.argGroups.get(activeGroupIndex).name);
         }
         //debug lines don't erase yet
-        System.out.println("out of for");
-        System.out.println(activeCommand.name());
-        System.out.println("agidx:"+activeGroupIndex+" groups:"+groups+" loosecnt:"+looseCnt+" groupCnt:"+groupCnt);
+        //System.out.println("out of for");
+        //System.out.println(activeCommand.name());
+        //System.out.println("agidx:"+activeGroupIndex+" groups:"+groups+" loosecnt:"+looseCnt+" groupCnt:"+groupCnt);
         activeCommand.print();
 
         return activeCommand;

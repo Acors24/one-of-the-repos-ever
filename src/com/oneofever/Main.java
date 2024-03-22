@@ -39,14 +39,22 @@ public class Main {
                 String[] tokens = line.strip().split(" "); 
                 if (tokens.length == 1 && tokens[0].equals(""))
                     continue;
+
+                AbstractCommand parsed = null;
                 try
                 {
-                    AbstractCommand parsed = parser.parse(tokens);
+                    parsed = parser.parse(tokens);
                     parsed.run(tokens);
                 }
-                catch (ParseException ex)
+                catch (ParseException ex) //TODO get command if parse fails, otherwise usage will not be displayed
                 {
                     System.out.println(ex.getMessage());
+                    if (parsed != null)
+                    {
+                        String usage = parsed.usage();
+                        if (usage != null)
+                            System.out.println(usage);
+                    }
                 }
             }
         } catch (IOException e) {

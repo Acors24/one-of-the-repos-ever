@@ -62,6 +62,7 @@ public class TriangleCommand extends AbstractCommand {
         }
     }
 
+    @Override
     public String usage() {
         return "Usage:\n" + //
                 "\ttriangle {side | height | area} <value>";

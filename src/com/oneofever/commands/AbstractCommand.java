@@ -45,6 +45,11 @@ public abstract class AbstractCommand
         return a.toString().strip();
     }
 
+    public String usage()
+    {
+        return null;
+    }
+
     public Properties toProperties()
     {
         return null;
