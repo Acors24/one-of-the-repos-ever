@@ -4,13 +4,10 @@ import java.util.ArrayList;
 
 public abstract class ICommand
 {
-/*
-    public ArrayList<CommandInfo> commandInfo = new ArrayList<CommandInfo>();
-    public abstract String[] next(String current);
-    public abstract Integer tokens(String current);
-*/
+
     public ArrayList<ArgGroup> argGroups = new ArrayList<ArgGroup>();
     public ArrayList<Object> looseArgs =  new ArrayList<Object>();
+    public Integer groupNumber = 0;
     public String looseArgsType = "";
     public Integer looseArgsNumber =0;
 

@@ -53,13 +53,15 @@ public class Parser
         Integer looseCnt = 0; //counter for how much more looseargs needed
         Integer groupCnt = 0; // counter for how much more needed in curr group
         Integer groups = 0; // number of groups in curr command
+        // Integer groupsCnt = 0; // number p
         //we might need number of groups needed or we can leave it up to commands to deal with it
         // for now leave it up commands
         System.out.println("asdsadsadsa");
         for (String a : toParse)
         {
-            if(activeCommand != null ) System.out.println("acname: "+activeCommand.name()+ "acg: "+activeGroupIndex);
+            // if(activeCommand != null ) System.out.println("acname: "+activeCommand.name()+ "acg: "+activeGroupIndex);
             if (end) throw new ParseException("Unexpected argument: "+a);
+            //we curretly dont hava a command to parse
             if (activeCommand== null)
             {
                 Optional<ICommand> match = commands.stream().filter(σ -> σ.name().equals(a)).findFirst();
@@ -72,15 +74,24 @@ public class Parser
 
                 looseCnt = activeCommand.looseArgsNumber;
                 groupCnt = 0;
-                groups = activeCommand.argGroups.size();
+                groups = activeCommand.groupNumber;
 
-                if (groups+activeCommand.looseArgsNumber == 0) end = true;
+                if (activeCommand.argGroups.size()+activeCommand.looseArgsNumber == 0) end = true;
                 continue;
             }
+            //we donst have an arggroup
             if(activeGroupIndex<0){
                 activeGroupIndex = Arrays.asList(activeCommand.argGroupsNames()).indexOf(a);
 
                 if(activeGroupIndex>=0){
+                    if(groups==0){ //juz za duzo grup
+                        throw new ParseException("too many groupargs: "+activeCommand.name()+" gr: "+a+" grcom: "+activeCommand.groupNumber);
+                    }
+                    //chce miec nowa grupe z nieuzupeniona poprzednia
+                    if(groupCnt>0){
+                        throw new ParseException("too few arguments in previous group: "+activeCommand.name()+" gr: "+a);
+                    }
+                    groups--;
                     groupCnt = activeCommand.argGroups.get(activeGroupIndex).number;
                 }
                 else{
@@ -104,10 +115,14 @@ public class Parser
             }
             //nie spawdzam czy grupa pelna bo wtedy end
             if(isArgumentOfType(a,activeCommand.argGroups.get(activeGroupIndex).argType)){
+                if(groupCnt==0){
+                    throw new ParseException("too many groupargs: "+activeCommand.name()+" group: "+activeCommand.argGroups.get(activeGroupIndex).name);
+                }
                 activeCommand.argGroups.get(activeGroupIndex).contents.add(a);
                 groupCnt--;
+                //tu trzeba zmienic bo potem moze byc wiecej niz jedna grupa
                 if(groupCnt==0){
-                    if(looseCnt==0) end=true;
+                    if(looseCnt==0 && groups==0) end=true;
                     else{
                         activeGroupIndex = -1;
                     }
@@ -118,11 +133,13 @@ public class Parser
             }
 
         }
+        /*
+        //debug lines don't erase yet
         System.out.println("out of for");
         System.out.println(activeCommand.name());
         System.out.println("agidx:"+activeGroupIndex+" groups:"+groups+" loosecnt:"+looseCnt+" groupCnt:"+groupCnt);
         activeCommand.print();
-
+        */
         return activeCommand;
     }
 }

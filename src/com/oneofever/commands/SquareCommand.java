@@ -11,31 +11,10 @@ public class SquareCommand extends ICommand {
         argGroups.add(new ArgGroup("side", "Double", 1));
         argGroups.add(new ArgGroup("diagonal", "Double", 1));
         argGroups.add(new ArgGroup("area", "Double", 1));
+        groupNumber = 1;
         // commandInfo.add(new CommandInfo("double", null, null));
     }
-/*
-    @Override
-    public String[] next(String current)
-    {
-        Optional<CommandInfo> match = commandInfo.stream().filter(σ -> σ.getActiveModifier().equals(current)).findFirst();
-        if (match.isPresent()) {
-            return match.get().getValidChanges();
-        } else {
-            return null;
-        }
-    }
 
-    @Override
-    public Integer tokens(String current)
-    {
-        Optional<CommandInfo> match = commandInfo.stream().filter(σ -> σ.getActiveModifier().equals(current)).findFirst();
-        if (match.isPresent()) {
-            return match.get().getCounter();
-        } else {
-            return null;
-        }
-    }
-*/
     @Override
     public String name() {
         return "square";

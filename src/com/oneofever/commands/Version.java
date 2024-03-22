@@ -4,24 +4,6 @@ import com.oneofever.commands.CommandInfo;
 
 public class Version extends ICommand
 {
-/*
-    public Version()
-    {
-        commandInfo.add(new CommandInfo("version", null, 0));
-    }
-
-    @Override
-    public String[] next(String current)
-    {
-        return null;
-    }
-
-    @Override
-    public Integer tokens(String current)
-    {
-        return 0;
-    }
-*/
     @Override
     public String name()
     {
