@@ -131,13 +131,22 @@ public class Parser
             }
 
         }
-        /*
+
+        if(groups>0){
+            throw new ParseException("Too few groups");
+        }
+        if(looseCnt>0){
+            throw new ParseException("Too few loose arguments");
+        }
+        if(groupCnt>0){
+            throw new ParseException("Too few arguments in a group: "+activeCommand.argGroups.get(activeGroupIndex).name);
+        }
         //debug lines don't erase yet
         System.out.println("out of for");
         System.out.println(activeCommand.name());
         System.out.println("agidx:"+activeGroupIndex+" groups:"+groups+" loosecnt:"+looseCnt+" groupCnt:"+groupCnt);
         activeCommand.print();
-        */
+
         return activeCommand;
     }
 }
