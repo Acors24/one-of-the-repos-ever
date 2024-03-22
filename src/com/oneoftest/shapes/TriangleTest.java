@@ -1,7 +1,6 @@
 package com.oneofever.shapes;
 
 import com.oneofever.shapes.Triangle;
-import com.oneofever.shapes.Triangle.ArgType;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +18,9 @@ class TriangleTest {
 
     public TriangleTest()
     {
-        triangle = new com.oneofever.shapes.Triangle(ArgType.Side, 10.0);
+        Properties props = new Properties();
+        props.setSides(new Double[]{10.0});
+        triangle = new Triangle(props);
     }
 
     @Test
@@ -32,8 +33,8 @@ class TriangleTest {
     @DisplayName("Cannot build a triangle with negative length side")
     void testNonZero() {
         IllegalArgumentException thrown = assertThrows(
-           IllegalArgumentException.class,
-           () -> new com.oneofever.shapes.Triangle(ArgType.Side, -1));
+            IllegalArgumentException.class,
+            () -> new Triangle(Properties.create(new Double[]{-1.0}, null, null, null)));
         assertTrue(thrown.getMessage().contains("Side length cannot be negative."));
     }
 }
