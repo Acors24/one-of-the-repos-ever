@@ -3,13 +3,25 @@ package com.oneofever.commands;
 
 import java.util.LinkedList;
 
-public class Help implements ICommand {
+public class Help extends AbstractCommand {
+    LinkedList<AbstractCommand> commands;
 
-    LinkedList<ICommand> commands;
+    /*
+        @Override
+        public String[] next(String current)
+        {
+            return null;
+        }
 
+        @Override
+        public Integer tokens(String current)
+        {
+            return 0;
+        }
+    */
     @SuppressWarnings("unchecked")
-    public void setCommands(LinkedList<ICommand> commands) {
-        this.commands = (LinkedList<ICommand>) commands.clone();
+    public void setCommands(LinkedList<AbstractCommand> commands) {
+        this.commands = (LinkedList<AbstractCommand>) commands.clone();
     }
 
     @Override
@@ -23,9 +35,16 @@ public class Help implements ICommand {
     }
 
     @Override
-    public void run(String[] tokens) {
-        for (ICommand command : commands) {
+    public void run() {
+        for (AbstractCommand command : commands) {
             System.err.println(command.name() + " - " + command.description());
         }
+    }
+
+    @Override
+    public Help newObject() {
+        Help newInstance = new Help();
+        newInstance.setCommands(commands);
+        return newInstance;
     }
 }

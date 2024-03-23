@@ -2,41 +2,58 @@
 package com.oneofever.shapes;
 
 public class Triangle extends Shape {
-    public enum ArgType {
-        Side,
-        Height,
-        Area
-    }
+    public Triangle(Properties props) throws IllegalArgumentException {
+        this.props = props;
 
-    public Triangle(ArgType type, double value) throws IllegalArgumentException {
-        super();
+        Double side = null;
+        Double height = null;
+        Double area = null;
 
-        Double side = 0.0;
-        Double height = 0.0;
-        Double area = 0.0;
+        Double[] si = props.getSides();
+        Double[] he = props.getHeights();
+        Double ar = props.getArea();
 
-        switch (type) {
-            case Side:
-                side = value;
-                height = (side * Math.sqrt(3)) / 2;
-                area = (side * height) / 2;
-                break;
+        int i = 0;
 
-            case Height:
-                height = value;
-                side = height * 2 / Math.sqrt(3);
-                area = (side * height) / 2;
-                break;
+        if (si != null) {
+            if (si.length != 1) {
+                throw new IllegalArgumentException("Wrong number of sides.");
+            }
+            side = si[0];
+            height = (side * Math.sqrt(3)) / 2;
+            area = (side * height) / 2;
 
-            case Area:
-                area = value;
-                side = Math.sqrt(area / Math.sqrt(3)) * 2;
-                height = (side * Math.sqrt(3)) / 2;
-                break;
+            props.setHeights(new Double[] {height});
+            props.setArea(area);
+            i++;
         }
-        props.setSides(new Double[] {side});
-        props.setHeights(new Double[] {height});
-        props.setArea(area);
+        if (he != null) {
+            if (he.length != 1) {
+                throw new IllegalArgumentException("Wrong number of heights.");
+            }
+            height = he[0];
+            side = height * 2 / Math.sqrt(3);
+            area = (side * height) / 2;
+
+            props.setSides(new Double[] {side});
+            props.setArea(area);
+            i++;
+        }
+        if (ar != null) {
+            area = ar;
+            side = Math.sqrt(area / Math.sqrt(3)) * 2;
+            height = (side * Math.sqrt(3)) / 2;
+
+            props.setSides(new Double[] {side});
+            props.setHeights(new Double[] {height});
+            i++;
+        }
+        if (i == 0) {
+            throw new IllegalArgumentException("Not enough arguments.");
+        }
+        if (i > 1) {
+            throw new IllegalArgumentException("Too many arguments.");
+        }
     }
 
     public double getSide() {

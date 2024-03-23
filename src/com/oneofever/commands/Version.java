@@ -1,8 +1,7 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
-public class Version implements ICommand {
-
+public class Version extends AbstractCommand {
     @Override
     public String name() {
         return "version";
@@ -14,7 +13,7 @@ public class Version implements ICommand {
     }
 
     @Override
-    public void run(String[] tokens) {
+    public void run() {
         System.out.println("0.0.5");
     }
 }

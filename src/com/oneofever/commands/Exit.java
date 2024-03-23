@@ -1,8 +1,7 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
-public class Exit implements ICommand {
-
+public class Exit extends AbstractCommand {
     @Override
     public String name() {
         return "exit";
@@ -14,7 +13,7 @@ public class Exit implements ICommand {
     }
 
     @Override
-    public void run(String[] tokens) {
+    public void run() {
         System.exit(0);
     }
 }
