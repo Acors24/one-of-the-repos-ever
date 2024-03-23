@@ -1,4 +1,5 @@
-/* (C)2024 - one-of-the-teams-ever */ package com.oneofever;
+/* (C)2024 - one-of-the-teams-ever */
+package com.oneofever;
 
 import com.oneofever.commands.AbstractCommand;
 import com.oneofever.parser.ParseException;
@@ -20,6 +21,7 @@ public class Main {
             commands.add(new com.oneofever.commands.Version());
             commands.add(new com.oneofever.commands.SquareCommand());
             commands.add(new com.oneofever.commands.TriangleCommand());
+            commands.add(new com.oneofever.commands.RectangleCommand());
             commands.add(new com.oneofever.commands.Exit());
             helpCommand.setCommands(commands);
             LineReader lineReader =

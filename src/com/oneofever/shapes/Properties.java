@@ -33,6 +33,7 @@ public class Properties {
     public void setSides(Double[] sides) throws IllegalArgumentException {
         if (sides != null) {
             for (Double side : sides) {
+                if (side == null) continue;
                 if (side < 0) throw new IllegalArgumentException("Side length cannot be negative.");
             }
         }
@@ -46,6 +47,7 @@ public class Properties {
     public void setHeights(Double[] heights) throws IllegalArgumentException {
         if (heights != null) {
             for (Double height : heights) {
+                if (height == null) continue;
                 if (height < 0)
                     throw new IllegalArgumentException("Height length cannot be negative.");
             }
@@ -60,6 +62,7 @@ public class Properties {
     public void setDiagonals(Double[] diagonals) throws IllegalArgumentException {
         if (diagonals != null) {
             for (Double diagonal : diagonals) {
+                if (diagonal == null) continue;
                 if (diagonal < 0)
                     throw new IllegalArgumentException("Diagonal length cannot be negative.");
             }

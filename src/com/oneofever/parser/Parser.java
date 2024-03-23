@@ -55,6 +55,7 @@ public class Parser {
         for (String a : toParse) {
             // if(activeCommand != null ) System.out.println("acname: "+activeCommand.name()+ "acg:
             // "+activeGroupIndex);
+            if (a.isEmpty()) continue;
             if (end) throw new ParseException("Unexpected argument: " + a, activeCommand);
             // we curretly dont hava a command to parse
             if (activeCommand == null) {
