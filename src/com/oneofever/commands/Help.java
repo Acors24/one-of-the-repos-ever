@@ -1,23 +1,24 @@
+/* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
 import java.util.LinkedList;
 
-public class Help extends AbstractCommand
-{
+public class Help extends AbstractCommand {
     LinkedList<AbstractCommand> commands;
-/*
-    @Override
-    public String[] next(String current)
-    {
-        return null;
-    }
 
-    @Override
-    public Integer tokens(String current)
-    {
-        return 0;
-    }
-*/
+    /*
+        @Override
+        public String[] next(String current)
+        {
+            return null;
+        }
+
+        @Override
+        public Integer tokens(String current)
+        {
+            return 0;
+        }
+    */
     @SuppressWarnings("unchecked")
     public void setCommands(LinkedList<AbstractCommand> commands) {
         this.commands = (LinkedList<AbstractCommand>) commands.clone();
@@ -36,13 +37,12 @@ public class Help extends AbstractCommand
     @Override
     public void run() {
         for (AbstractCommand command : commands) {
-        System.err.println(command.name() + " - " + command.description());
+            System.err.println(command.name() + " - " + command.description());
         }
     }
 
     @Override
-    public Help newObject()
-    {
+    public Help newObject() {
         Help newInstance = new Help();
         newInstance.setCommands(commands);
         return newInstance;

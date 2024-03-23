@@ -1,22 +1,19 @@
+/* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
-public class Version extends AbstractCommand
-{
+public class Version extends AbstractCommand {
     @Override
-    public String name()
-    {
+    public String name() {
         return "version";
     }
 
     @Override
-    public String description()
-    {
+    public String description() {
         return "display program version";
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         System.out.println("0.0.5");
     }
 }
