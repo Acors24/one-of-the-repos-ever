@@ -1,9 +1,14 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
-import com.oneofever.shapes.Square.ArgType;
+import com.oneofever.Pair;
+import com.oneofever.parsing.Any;
+import com.oneofever.parsing.Argument;
+import com.oneofever.parsing.Fulfillable;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
-public class SquareCommand implements ICommand {
+public class SquareCommand extends Command {
 
     @Override
     public String name() {
@@ -16,35 +21,9 @@ public class SquareCommand implements ICommand {
     }
 
     @Override
-    public void run(String[] tokens) {
-        if (tokens.length < 3) {
-            System.err.println("Not enough arguments.\n" + usage());
-            return;
-        }
-
-        ArgType argType =
-                switch (tokens[1]) {
-                    case "side" -> ArgType.Side;
-                    case "diagonal" -> ArgType.Diagonal;
-                    case "area" -> ArgType.Area;
-                    default -> null;
-                };
-
-        if (argType == null) {
-            System.err.println("Wrong arguments.\n" + usage());
-            return;
-        }
-
-        double value = 0;
+    public void run(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
         try {
-            value = Double.parseDouble(tokens[2]);
-        } catch (NumberFormatException ex) {
-            System.err.println("Wrong value format.\n" + usage());
-            return;
-        }
-
-        try {
-            com.oneofever.shapes.Square square = new com.oneofever.shapes.Square(argType, value);
+            com.oneofever.shapes.Square square = new com.oneofever.shapes.Square(values);
 
             System.out.println("side = " + square.getSide());
             System.out.println("diagonal = " + square.getDiagonal());
@@ -55,9 +34,18 @@ public class SquareCommand implements ICommand {
         }
     }
 
+    @Override
     public String usage() {
         return "Usage:\n"
                 + //
                 "\tsquare {side | diagonal | area} <value>";
+    }
+
+    public Fulfillable getArgumentTree() {
+        return new Any(
+                1,
+                new Fulfillable[] {
+                    new Argument("side", 1), new Argument("diagonal", 1), new Argument("area", 1)
+                });
     }
 }

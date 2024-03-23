@@ -1,53 +1,56 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Pair;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 public class Square extends Shape {
-    public enum ArgType {
-        Side,
-        Diagonal,
-        Area
-    }
+    Double side;
+    Double diagonal;
+    Double area;
 
-    public Square(ArgType type, double value) throws IllegalArgumentException {
-        super();
+    public Square(Hashtable<String, Pair<Integer, ArrayList<Double>>> values)
+            throws IllegalArgumentException {
+        if (values.containsKey("side")) {
+            side = values.get("side").b.get(0);
 
-        Double side = 0.0;
-        Double diagonal = 0.0;
-        Double area = 0.0;
+            if (side < 0) {
+                throw new IllegalArgumentException("Side length cannot be negative.");
+            }
 
-        switch (type) {
-            case Side:
-                side = value;
-                diagonal = side * Math.sqrt(2);
-                area = side * side;
-                break;
+            diagonal = side * Math.sqrt(2);
+            area = side * side;
+        } else if (values.containsKey("diagonal")) {
+            diagonal = values.get("diagonal").b.get(0);
 
-            case Diagonal:
-                diagonal = value;
-                side = diagonal / Math.sqrt(2);
-                area = side * side;
-                break;
+            if (diagonal < 0) {
+                throw new IllegalArgumentException("Diagonal length cannot be negative.");
+            }
 
-            case Area:
-                area = value;
-                side = Math.sqrt(area);
-                diagonal = side * Math.sqrt(2);
-                break;
+            side = diagonal / Math.sqrt(2);
+            area = side * side;
+        } else if (values.containsKey("area")) {
+            area = values.get("area").b.get(0);
+
+            if (area < 0) {
+                throw new IllegalArgumentException("Area cannot be negative.");
+            }
+
+            side = Math.sqrt(area);
+            diagonal = side * Math.sqrt(2);
         }
-        props.setSides(new Double[] {side});
-        props.setDiagonals(new Double[] {diagonal});
-        props.setArea(area);
     }
 
-    public double getSide() {
-        return props.getSides()[0];
+    public Double getSide() {
+        return side;
     }
 
-    public double getDiagonal() {
-        return props.getDiagonals()[0];
+    public Double getDiagonal() {
+        return diagonal;
     }
 
     public Double getArea() {
-        return props.getArea();
+        return area;
     }
 }

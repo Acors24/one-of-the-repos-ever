@@ -1,15 +1,19 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
-import java.util.LinkedList;
+import com.oneofever.Pair;
+import com.oneofever.parsing.All;
+import com.oneofever.parsing.Fulfillable;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
-public class Help implements ICommand {
+public class Help extends Command {
 
-    LinkedList<ICommand> commands;
+    ArrayList<Command> commands;
 
     @SuppressWarnings("unchecked")
-    public void setCommands(LinkedList<ICommand> commands) {
-        this.commands = (LinkedList<ICommand>) commands.clone();
+    public void setCommands(ArrayList<Command> commands2) {
+        this.commands = (ArrayList<Command>) commands2.clone();
     }
 
     @Override
@@ -23,9 +27,19 @@ public class Help implements ICommand {
     }
 
     @Override
-    public void run(String[] tokens) {
-        for (ICommand command : commands) {
+    public String usage() {
+        return "help";
+    }
+
+    @Override
+    public void run(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
+        for (Command command : commands) {
             System.err.println(command.name() + " - " + command.description());
         }
+    }
+
+    @Override
+    public Fulfillable getArgumentTree() {
+        return new All(new Fulfillable[] {});
     }
 }

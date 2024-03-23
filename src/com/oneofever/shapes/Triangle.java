@@ -1,53 +1,56 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Pair;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 public class Triangle extends Shape {
-    public enum ArgType {
-        Side,
-        Height,
-        Area
-    }
+    Double side;
+    Double height;
+    Double area;
 
-    public Triangle(ArgType type, double value) throws IllegalArgumentException {
-        super();
+    public Triangle(Hashtable<String, Pair<Integer, ArrayList<Double>>> values)
+            throws IllegalArgumentException {
+        if (values.containsKey("side")) {
+            side = values.get("side").b.get(0);
 
-        Double side = 0.0;
-        Double height = 0.0;
-        Double area = 0.0;
+            if (side < 0) {
+                throw new IllegalArgumentException("Side length cannot be negative.");
+            }
 
-        switch (type) {
-            case Side:
-                side = value;
-                height = (side * Math.sqrt(3)) / 2;
-                area = (side * height) / 2;
-                break;
+            height = (side * Math.sqrt(3)) / 2;
+            area = side * side;
+        } else if (values.containsKey("height")) {
+            height = values.get("height").b.get(0);
 
-            case Height:
-                height = value;
-                side = height * 2 / Math.sqrt(3);
-                area = (side * height) / 2;
-                break;
+            if (height < 0) {
+                throw new IllegalArgumentException("Height length cannot be negative.");
+            }
 
-            case Area:
-                area = value;
-                side = Math.sqrt(area / Math.sqrt(3)) * 2;
-                height = (side * Math.sqrt(3)) / 2;
-                break;
+            side = height * 2 / Math.sqrt(3);
+            area = side * side;
+        } else if (values.containsKey("area")) {
+            area = values.get("area").b.get(0);
+
+            if (area < 0) {
+                throw new IllegalArgumentException("Area cannot be negative.");
+            }
+
+            side = Math.sqrt(area);
+            height = (side * Math.sqrt(3)) / 2;
         }
-        props.setSides(new Double[] {side});
-        props.setHeights(new Double[] {height});
-        props.setArea(area);
     }
 
-    public double getSide() {
-        return props.getSides()[0];
+    public Double getSide() {
+        return side;
     }
 
-    public double getHeight() {
-        return props.getHeights()[0];
+    public Double getHeight() {
+        return height;
     }
 
     public Double getArea() {
-        return props.getArea();
+        return area;
     }
 }
