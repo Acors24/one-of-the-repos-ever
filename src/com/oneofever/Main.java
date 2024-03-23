@@ -1,4 +1,6 @@
 /* (C)2024 - one-of-the-teams-ever */
+package com.oneofever;
+
 import com.oneofever.commands.AbstractCommand;
 import com.oneofever.parser.ParseException;
 import com.oneofever.parser.Parser;
