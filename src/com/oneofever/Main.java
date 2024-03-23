@@ -1,5 +1,4 @@
-/* (C)2024 - one-of-the-teams-ever */
-package com.oneofever;
+/* (C)2024 - one-of-the-teams-ever */ package com.oneofever;
 
 import com.oneofever.commands.AbstractCommand;
 import com.oneofever.parser.ParseException;
@@ -23,7 +22,6 @@ public class Main {
             commands.add(new com.oneofever.commands.TriangleCommand());
             commands.add(new com.oneofever.commands.Exit());
             helpCommand.setCommands(commands);
-
             LineReader lineReader =
                     LineReaderBuilder.builder()
                             .terminal(TerminalBuilder.builder().build())
@@ -33,14 +31,11 @@ public class Main {
                                                     .map(c -> c.name())
                                                     .toArray(String[]::new)))
                             .build();
-
             Parser parser = new Parser(commands);
-
             String line;
             while ((line = lineReader.readLine(PROMPT)) != null) {
                 String[] tokens = line.strip().split(" ");
                 if (tokens.length == 1 && tokens[0].isEmpty()) continue;
-
                 AbstractCommand parsed = null;
                 try {
                     parsed = parser.parse(tokens);
