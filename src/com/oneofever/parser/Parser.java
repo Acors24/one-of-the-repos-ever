@@ -58,7 +58,7 @@ public class Parser
         for (String a : toParse)
         {
             // if(activeCommand != null ) System.out.println("acname: "+activeCommand.name()+ "acg: "+activeGroupIndex);
-            if (end) throw new ParseException("Unexpected argument: "+a);
+            if (end) throw new ParseException("Unexpected argument: "+a, activeCommand);
             //we curretly dont hava a command to parse
             if (activeCommand== null)
             {
@@ -67,7 +67,7 @@ public class Parser
                     activeCommand = match.get().newObject();
                     // activeModifier = a;
                 } else {
-                   throw new ParseException("Unrecognized command: "+a);
+                   throw new ParseException("Unrecognized command: "+a, null);
                 }
 
                 looseCnt = activeCommand.looseArgsNumber;
@@ -83,11 +83,11 @@ public class Parser
 
                 if(activeGroupIndex>=0){
                     if(groups==0){ //juz za duzo grup
-                        throw new ParseException("too many groupargs: "+activeCommand.name()+" gr: "+a+" grcom: "+activeCommand.groupNumber);
+                        throw new ParseException("too many groupargs: "+activeCommand.name()+" gr: "+a+" grcom: "+activeCommand.groupNumber, activeCommand);
                     }
                     //chce miec nowa grupe z nieuzupeniona poprzednia
                     if(groupCnt>0){
-                        throw new ParseException("too few arguments in previous group: "+activeCommand.name()+" gr: "+a);
+                        throw new ParseException("too few arguments in previous group: "+activeCommand.name()+" gr: "+a, activeCommand);
                     }
                     groups--;
                     groupCnt = activeCommand.argGroups.get(activeGroupIndex).number;
@@ -101,12 +101,12 @@ public class Parser
                             if(looseCnt==0) end = true;
                         }
                         else{
-                            throw new ParseException("wrong command argument: "+activeCommand.name()+" arg: "+a);
+                            throw new ParseException("wrong command argument: "+activeCommand.name()+" arg: "+a, activeCommand);
                         }
 
                     }
                     else{
-                        throw new ParseException("wrong amount of loose args: "+activeCommand.name()+" arg: "+a);
+                        throw new ParseException("wrong amount of loose args: "+activeCommand.name()+" arg: "+a, activeCommand);
                     }
                 }
                 continue;
@@ -114,7 +114,7 @@ public class Parser
             //nie spawdzam czy grupa pelna bo wtedy end
             if(isArgumentOfType(a,activeCommand.argGroups.get(activeGroupIndex).argType)){
                 if(groupCnt==0){
-                    throw new ParseException("too many groupargs: "+activeCommand.name()+" group: "+activeCommand.argGroups.get(activeGroupIndex).name);
+                    throw new ParseException("too many groupargs: "+activeCommand.name()+" group: "+activeCommand.argGroups.get(activeGroupIndex).name, activeCommand);
                 }
                 activeCommand.argGroups.get(activeGroupIndex).contents.add(a);
                 groupCnt--;
@@ -127,19 +127,19 @@ public class Parser
                 }
             }
             else{
-                throw new ParseException("wrong command groupargument: "+activeCommand.name()+"arggrop:"+activeCommand.argGroups.get(activeGroupIndex).name+" arg: "+a);
+                throw new ParseException("wrong command groupargument: "+activeCommand.name()+"arggrop:"+activeCommand.argGroups.get(activeGroupIndex).name+" arg: "+a, activeCommand);
             }
 
         }
 
         if(groups>0){
-            throw new ParseException("Too few groups");
+            throw new ParseException("Too few groups", activeCommand);
         }
         if(looseCnt>0){
-            throw new ParseException("Too few loose arguments");
+            throw new ParseException("Too few loose arguments", activeCommand);
         }
         if(groupCnt>0){
-            throw new ParseException("Too few arguments in a group: "+activeCommand.argGroups.get(activeGroupIndex).name);
+            throw new ParseException("Too few arguments in a group: "+activeCommand.argGroups.get(activeGroupIndex).name, activeCommand);
         }
         //debug lines don't erase yet
         //System.out.println("out of for");

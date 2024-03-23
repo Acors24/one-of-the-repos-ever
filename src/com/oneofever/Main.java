@@ -46,9 +46,10 @@ public class Main {
                     parsed = parser.parse(tokens);
                     parsed.run();
                 }
-                catch (ParseException ex) //TODO get command if parse fails, otherwise usage will not be displayed
+                catch (ParseException ex)
                 {
                     System.out.println(ex.getMessage());
+                    parsed = ex.getCommand();
                     if (parsed != null)
                     {
                         String usage = parsed.usage();
