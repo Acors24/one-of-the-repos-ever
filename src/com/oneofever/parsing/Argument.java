@@ -27,4 +27,15 @@ public class Argument implements Fulfillable {
     public boolean containsName(String name) {
         return this.name.equals(name);
     }
+
+    @Override
+    public String toString() {
+        String result = name;
+
+        for (int i = 0; i < desiredValueAmount; i++) {
+            result += " <value" + (i + 1) + ">";
+        }
+
+        return result;
+    }
 }

@@ -34,13 +34,6 @@ public class RectangleCommand extends Command {
         }
     }
 
-    @Override
-    public String usage() {
-        return "Usage:\n"
-                + //
-                "\trectangle { sides <a> <b> | { side <a> | diagonal <a> | area <a> }{2} }";
-    }
-
     public Fulfillable getArgumentTree() {
         return new Any(
                 1,

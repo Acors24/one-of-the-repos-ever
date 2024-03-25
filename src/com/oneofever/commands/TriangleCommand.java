@@ -34,13 +34,6 @@ public class TriangleCommand extends Command {
         }
     }
 
-    @Override
-    public String usage() {
-        return "Usage:\n"
-                + //
-                "\ttriangle {side | height | area} <value>";
-    }
-
     public Fulfillable getArgumentTree() {
         return new Any(
                 1,

@@ -34,13 +34,6 @@ public class SquareCommand extends Command {
         }
     }
 
-    @Override
-    public String usage() {
-        return "Usage:\n"
-                + //
-                "\tsquare {side | diagonal | area} <value>";
-    }
-
     public Fulfillable getArgumentTree() {
         return new Any(
                 1,

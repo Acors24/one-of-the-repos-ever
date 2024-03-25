@@ -27,4 +27,9 @@ public class All extends ArgumentGroup {
     public boolean containsName(String name) {
         return arguments.stream().anyMatch(arg -> arg.containsName(name));
     }
+
+    @Override
+    public String toString() {
+        return String.join(" ", arguments.stream().map(arg -> arg.toString()).toList());
+    }
 }

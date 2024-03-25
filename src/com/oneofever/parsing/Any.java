@@ -31,4 +31,13 @@ public class Any extends ArgumentGroup {
     public boolean containsName(String name) {
         return arguments.stream().anyMatch(arg -> arg.containsName(name));
     }
+
+    @Override
+    public String toString() {
+        String result = "{ ";
+
+        result += String.join(" | ", arguments.stream().map(arg -> arg.toString()).toList());
+
+        return result + (requiredN == 1 ? " }" : " }{" + requiredN + "}");
+    }
 }

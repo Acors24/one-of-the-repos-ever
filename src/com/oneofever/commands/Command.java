@@ -11,7 +11,9 @@ public abstract class Command {
 
     public abstract String description();
 
-    public abstract String usage();
+    public String usage() {
+        return "Usage:\n\t" + name() + " " + getArgumentTree();
+    }
 
     public abstract void run(Hashtable<String, Pair<Integer, ArrayList<Double>>> values);
 
