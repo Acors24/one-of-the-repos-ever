@@ -24,6 +24,13 @@ public class RhombusCommand extends AbstractCommand {
     }
 
     @Override
+    public String usage() {
+        return "Usage:\n"
+                + //
+                "\trhombus {side | diagonal1 | diagonal2 | area} <value1> {side | diagonal1 | diagonal2 | area} <value2>";
+    }
+
+    @Override
     public void run() {
         try {
             Rhombus rhombus = new Rhombus(toProperties());
