@@ -1,6 +1,7 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.parser;
 
+import com.oneofever.Message;
 import com.oneofever.commands.AbstractCommand;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,7 +18,7 @@ public class Parser {
         // na razie zakladam ze type to typ podstawowy
         try {
             switch (type) {
-                case "Double":
+                case Message.Info.DOUBLE:
                     Double.parseDouble(argument);
                     return true;
                 case "String":

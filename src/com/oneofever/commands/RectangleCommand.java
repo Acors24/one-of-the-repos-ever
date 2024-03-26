@@ -1,22 +1,23 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
+import com.oneofever.Message;
 import com.oneofever.shapes.Properties;
 import com.oneofever.shapes.Rectangle;
 
 public class RectangleCommand extends AbstractCommand {
 
     public RectangleCommand() {
-        argGroups.add(new ArgGroup("side_s", "Double", 1));
-        argGroups.add(new ArgGroup("side_l", "Double", 1));
-        argGroups.add(new ArgGroup("diagonal", "Double", 1));
-        argGroups.add(new ArgGroup("area", "Double", 1));
+        argGroups.add(new ArgGroup(Message.Info.SIDE_S, Message.Info.DOUBLE, 1));
+        argGroups.add(new ArgGroup(Message.Info.SIDE_L, Message.Info.DOUBLE, 1));
+        argGroups.add(new ArgGroup(Message.Info.DIAGONAL, Message.Info.DOUBLE, 1));
+        argGroups.add(new ArgGroup(Message.Info.AREA, Message.Info.DOUBLE, 1));
         groupNumber = 2;
     }
 
     @Override
     public String name() {
-        return "rectangle";
+        return Message.Info.RECTANGLE;
     }
 
     @Override
@@ -29,10 +30,10 @@ public class RectangleCommand extends AbstractCommand {
         try {
             Rectangle rectangle = new Rectangle(toProperties());
 
-            System.out.println("shorter side = " + rectangle.getSideS());
-            System.out.println("longer side = " + rectangle.getSideL());
-            System.out.println("diagonal = " + rectangle.getDiagonal());
-            System.out.println("area = " + rectangle.getArea());
+            System.out.println("shorter side = %d".formatted(rectangle.getSideS()));
+            System.out.println("longer side = %d".formatted(rectangle.getSideL()));
+            System.out.println("%s = %d".formatted(Message.Info.DIAGONAL, rectangle.getDiagonal()));
+            System.out.println("%s = %d".formatted(Message.Info.AREA, rectangle.getArea()));
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return;
@@ -59,7 +60,7 @@ public class RectangleCommand extends AbstractCommand {
                     value = Double.parseDouble((String) obj);
                 }
                 switch (arg.name) {
-                    case "side_s":
+                    case Message.Info.SIDE_S:
                         if (value != null) {
                             Double[] sides = props.getSides();
                             if (sides == null) sides = new Double[] {value, null};
@@ -67,7 +68,7 @@ public class RectangleCommand extends AbstractCommand {
                             props.setSides(sides);
                         }
                         break;
-                    case "side_l":
+                    case Message.Info.SIDE_L:
                         if (value != null) {
                             Double[] sides = props.getSides();
                             if (sides == null) sides = new Double[] {null, value};
@@ -75,10 +76,10 @@ public class RectangleCommand extends AbstractCommand {
                             props.setSides(sides);
                         }
                         break;
-                    case "diagonal":
+                    case Message.Info.DIAGONAL:
                         if (value != null) props.setDiagonals(new Double[] {value});
                         break;
-                    case "area":
+                    case Message.Info.AREA:
                         if (value != null) props.setArea(value);
                         break;
                     default:
@@ -86,7 +87,7 @@ public class RectangleCommand extends AbstractCommand {
                 }
             }
         } catch (NumberFormatException ex) {
-            System.out.println("Parser failed: " + ex);
+            System.out.println(Message.Error.PARSER_FAILED + ex);
         }
         return props;
     }

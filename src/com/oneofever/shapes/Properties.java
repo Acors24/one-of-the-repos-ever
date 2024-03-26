@@ -1,6 +1,8 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Message;
+
 public class Properties {
 
     public static Properties create(
@@ -20,6 +22,7 @@ public class Properties {
         heights = null;
         diagonals = null;
         area = null;
+        System.out.println(Message.Error.AREA_NEGATIVE);
     }
 
     public void update(Double[] sides, Double[] heights, Double[] diagonals, Double area)
@@ -34,7 +37,7 @@ public class Properties {
         if (sides != null) {
             for (Double side : sides) {
                 if (side == null) continue;
-                if (side < 0) throw new IllegalArgumentException("Side length cannot be negative.");
+                if (side < 0) throw new IllegalArgumentException(Message.Error.SIDE_NEGATIVE);
             }
         }
         this.sides = sides;
@@ -48,8 +51,7 @@ public class Properties {
         if (heights != null) {
             for (Double height : heights) {
                 if (height == null) continue;
-                if (height < 0)
-                    throw new IllegalArgumentException("Height length cannot be negative.");
+                if (height < 0) throw new IllegalArgumentException(Message.Error.HEIGHT_NEGATIVE);
             }
         }
         this.heights = heights;
@@ -64,7 +66,7 @@ public class Properties {
             for (Double diagonal : diagonals) {
                 if (diagonal == null) continue;
                 if (diagonal < 0)
-                    throw new IllegalArgumentException("Diagonal length cannot be negative.");
+                    throw new IllegalArgumentException(Message.Error.DIAGONAL_NEGATIVE);
             }
         }
         this.diagonals = diagonals;
@@ -76,7 +78,7 @@ public class Properties {
 
     public void setArea(Double area) {
         if (area != null && area < 0)
-            throw new IllegalArgumentException("Area cannot be negative.");
+            throw new IllegalArgumentException(Message.Error.AREA_NEGATIVE);
         this.area = area;
     }
 
