@@ -1,6 +1,8 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Message;
+
 public class Triangle extends Shape {
     public Triangle(Properties props) throws IllegalArgumentException {
         this.props = props;
@@ -17,7 +19,7 @@ public class Triangle extends Shape {
 
         if (si != null) {
             if (si.length != 1) {
-                throw new IllegalArgumentException("Wrong number of sides.");
+                throw new IllegalArgumentException(Message.Error.WRONG_NUMBER_OF_SIDES);
             }
             side = si[0];
             height = (side * Math.sqrt(3)) / 2;
@@ -29,7 +31,7 @@ public class Triangle extends Shape {
         }
         if (he != null) {
             if (he.length != 1) {
-                throw new IllegalArgumentException("Wrong number of heights.");
+                throw new IllegalArgumentException(Message.Error.WRONG_NUMBER_OF_HEIGHTS);
             }
             height = he[0];
             side = height * 2 / Math.sqrt(3);
@@ -49,10 +51,10 @@ public class Triangle extends Shape {
             i++;
         }
         if (i == 0) {
-            throw new IllegalArgumentException("Not enough arguments.");
+            throw new IllegalArgumentException(Message.Error.TOO_FEW_ARGUMENTS);
         }
         if (i > 1) {
-            throw new IllegalArgumentException("Too many arguments.");
+            throw new IllegalArgumentException(Message.Error.TOO_MANY_ARGUMENTS);
         }
     }
 

@@ -1,15 +1,16 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
+import com.oneofever.Message;
 import com.oneofever.shapes.Properties;
 import com.oneofever.shapes.Triangle;
 
 public class TriangleCommand extends AbstractCommand {
 
     public TriangleCommand() {
-        argGroups.add(new ArgGroup("side", "Double", 1));
-        argGroups.add(new ArgGroup("height", "Double", 1));
-        argGroups.add(new ArgGroup("area", "Double", 1));
+        argGroups.add(new ArgGroup(Message.Info.SIDE, Message.Info.DOUBLE, 1));
+        argGroups.add(new ArgGroup(Message.Info.HEIGHT, Message.Info.DOUBLE, 1));
+        argGroups.add(new ArgGroup(Message.Info.AREA, Message.Info.DOUBLE, 1));
         groupNumber = 1;
     }
 
@@ -28,9 +29,9 @@ public class TriangleCommand extends AbstractCommand {
         try {
             Triangle triangle = new Triangle(toProperties());
 
-            System.out.println("side = " + triangle.getSide());
-            System.out.println("height = " + triangle.getHeight());
-            System.out.println("area = " + triangle.getArea());
+            System.out.println("%s = %d".formatted(Message.Info.SIDE, triangle.getSide()));
+            System.out.println("%s = %d".formatted(Message.Info.HEIGHT, triangle.getHeight()));
+            System.out.println("%s = %d".formatted(Message.Info.AREA, triangle.getArea()));
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return;
@@ -56,13 +57,13 @@ public class TriangleCommand extends AbstractCommand {
                     value = Double.parseDouble((String) obj);
                 }
                 switch (arg.name) {
-                    case "side":
+                    case Message.Info.SIDE:
                         props.setSides(new Double[] {value});
                         break;
-                    case "height":
+                    case Message.Info.HEIGHT:
                         props.setHeights(new Double[] {value});
                         break;
-                    case "area":
+                    case Message.Info.AREA:
                         props.setArea(value);
                         break;
                     default:
@@ -70,7 +71,7 @@ public class TriangleCommand extends AbstractCommand {
                 }
             }
         } catch (NumberFormatException ex) {
-            System.out.println("Parser failed: " + ex);
+            System.out.println(Message.Error.PARSER_FAILED + ex);
         }
         return props;
     }

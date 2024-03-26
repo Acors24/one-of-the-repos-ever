@@ -4,6 +4,7 @@ package com.oneoftest.parser;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.oneofever.Message;
 import com.oneofever.commands.AbstractCommand;
 import com.oneofever.commands.RectangleCommand;
 import com.oneofever.commands.SquareCommand;
@@ -62,8 +63,11 @@ class ParserTest {
     void testValidParseSquare() throws ParseException {
         AbstractCommand rett = new SquareCommand();
         rett.argGroups.get(0).contents.add("8");
-        // assertEquals(test.parse(new String[]{"square","side","8"}), null);
-        assertTrue(compareAbstractCommands(test.parse(new String[] {"square", "side", "8"}), rett));
+        // assertEquals(test.parse(new String[]{Message.Info.SQUARE,Message.Info.SIDE,"8"}), null);
+        assertTrue(
+                compareAbstractCommands(
+                        test.parse(new String[] {Message.Info.SQUARE, Message.Info.SIDE, "8"}),
+                        rett));
     }
 
     @Test
@@ -72,7 +76,11 @@ class ParserTest {
         ParseException thrown =
                 assertThrows(
                         ParseException.class,
-                        () -> test.parse(new String[] {"square", "side", "1", "aaaaa"}));
+                        () ->
+                                test.parse(
+                                        new String[] {
+                                            Message.Info.SQUARE, Message.Info.SIDE, "1", "aaaaa"
+                                        }));
         assertTrue(thrown.getMessage().contains("Unexpected argument:"));
     }
 
@@ -82,7 +90,14 @@ class ParserTest {
         ParseException thrown =
                 assertThrows(
                         ParseException.class,
-                        () -> test.parse(new String[] {"square", "side", "aaaaaaaaaa", "aaaaa"}));
+                        () ->
+                                test.parse(
+                                        new String[] {
+                                            Message.Info.SQUARE,
+                                            Message.Info.SIDE,
+                                            "aaaaaaaaaa",
+                                            "aaaaa"
+                                        }));
         assertTrue(thrown.getMessage().contains("wrong command groupargument:"));
     }
 
@@ -92,10 +107,18 @@ class ParserTest {
         AbstractCommand rett = new RectangleCommand();
         rett.argGroups.get(0).contents.add("8");
         rett.argGroups.get(0).contents.add("9");
-        // assertEquals(test.parse(new String[]{"square","side","8"}), null);
+        // assertEquals(test.parse(new String[]{Message.Info.SQUARE,Message.Info.SIDE,"8"}), null);
         assertTrue(
                 compareAbstractCommands(
-                        test.parse(new String[] {"rectangle", "side", "8", "side", "9"}), rett));
+                        test.parse(
+                                new String[] {
+                                    Message.Info.RECTANGLE,
+                                    Message.Info.SIDE,
+                                    "8",
+                                    Message.Info.SIDE,
+                                    "9"
+                                }),
+                        rett));
     }
 
     @DisplayName("Parses Rectangle command correctly")
@@ -103,10 +126,17 @@ class ParserTest {
         AbstractCommand rett = new RectangleCommand();
         rett.argGroups.get(1).contents.add("8");
         rett.argGroups.get(2).contents.add("9");
-        // assertEquals(test.parse(new String[]{"square","side","8"}), null);
+        // assertEquals(test.parse(new String[]{Message.Info.SQUARE,Message.Info.SIDE,"8"}), null);
         assertTrue(
                 compareAbstractCommands(
-                        test.parse(new String[] {"rectangle", "diagonal", "8", "area", "9"}),
+                        test.parse(
+                                new String[] {
+                                    Message.Info.RECTANGLE,
+                                    Message.Info.DIAGONAL,
+                                    "8",
+                                    Message.Info.AREA,
+                                    "9"
+                                }),
                         rett));
     }
 
@@ -118,7 +148,12 @@ class ParserTest {
                         ParseException.class,
                         () ->
                                 test.parse(
-                                        new String[] {"rectangle", "side", "aaaaaaaaaa", "aaaaa"}));
+                                        new String[] {
+                                            Message.Info.RECTANGLE,
+                                            Message.Info.SIDE,
+                                            "aaaaaaaaaa",
+                                            "aaaaa"
+                                        }));
         assertTrue(thrown.getMessage().contains("wrong command groupargument:"));
     }
 
@@ -128,7 +163,11 @@ class ParserTest {
         ParseException thrown =
                 assertThrows(
                         ParseException.class,
-                        () -> test.parse(new String[] {"rectangle", "side", "1", "1", "1"}));
+                        () ->
+                                test.parse(
+                                        new String[] {
+                                            Message.Info.RECTANGLE, Message.Info.SIDE, "1", "1", "1"
+                                        }));
         assertTrue(thrown.getMessage().contains("wrong amount of loose args:"));
     }
 
@@ -138,7 +177,11 @@ class ParserTest {
         ParseException thrown =
                 assertThrows(
                         ParseException.class,
-                        () -> test.parse(new String[] {"rectangle", "side", "1"}));
+                        () ->
+                                test.parse(
+                                        new String[] {
+                                            Message.Info.RECTANGLE, Message.Info.SIDE, "1"
+                                        }));
         assertTrue(thrown.getMessage().contains("Too few groups"));
     }
 }

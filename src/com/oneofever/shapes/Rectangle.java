@@ -1,6 +1,8 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Message;
+
 public class Rectangle extends Shape {
     public Rectangle(Properties props) throws IllegalArgumentException {
         this.props = props;
@@ -23,7 +25,7 @@ public class Rectangle extends Shape {
 
         if (si != null) {
             if (si.length != 2) {
-                throw new IllegalArgumentException("Wrong number of sides.");
+                throw new IllegalArgumentException(Message.Error.WRONG_NUMBER_OF_SIDES);
             }
             ss = si[0];
             sl = si[1];
@@ -85,7 +87,7 @@ public class Rectangle extends Shape {
                 side_long = ar / side_short;
 
                 if (side_short.isNaN())
-                    throw new IllegalArgumentException("Diagonal is too short.");
+                    throw new IllegalArgumentException(Message.Error.DIAGONAL_TOO_SHORT);
                 if (side_short > side_long) {
                     Double temp = side_short;
                     side_short = side_long;
@@ -100,14 +102,14 @@ public class Rectangle extends Shape {
             i++;
         }
         if (i < 2) {
-            throw new IllegalArgumentException("Not enough arguments.");
+            throw new IllegalArgumentException(Message.Error.TOO_FEW_ARGUMENTS);
         }
         if (i > 2) {
-            throw new IllegalArgumentException("Too many arguments.");
+            throw new IllegalArgumentException(Message.Error.TOO_MANY_ARGUMENTS);
         }
 
         if (side_short > side_long) {
-            throw new IllegalArgumentException("Shorter side is longer than the longer side.");
+            throw new IllegalArgumentException(Message.Error.SHORTER_IS_LONGER);
         }
     }
 
