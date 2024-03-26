@@ -22,6 +22,7 @@ public class Main {
             commands.add(new com.oneofever.commands.SquareCommand());
             commands.add(new com.oneofever.commands.TriangleCommand());
             commands.add(new com.oneofever.commands.RectangleCommand());
+            commands.add(new com.oneofever.commands.RhombusCommand());
             commands.add(new com.oneofever.commands.Exit());
             helpCommand.setCommands(commands);
             LineReader lineReader =
