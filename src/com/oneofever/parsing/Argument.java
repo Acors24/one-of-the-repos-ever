@@ -1,3 +1,4 @@
+/* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.parsing;
 
 import com.oneofever.Pair;

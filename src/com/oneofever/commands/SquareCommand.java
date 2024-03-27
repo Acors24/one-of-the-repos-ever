@@ -2,6 +2,7 @@
 package com.oneofever.commands;
 
 import com.oneofever.Pair;
+import com.oneofever.functions.History;
 import com.oneofever.parsing.Any;
 import com.oneofever.parsing.Argument;
 import com.oneofever.parsing.Fulfillable;
@@ -28,6 +29,7 @@ public class SquareCommand extends Command {
             System.out.println("side = " + square.getSide());
             System.out.println("diagonal = " + square.getDiagonal());
             System.out.println("area = " + square.getArea());
+            History.add(name(), square);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return;

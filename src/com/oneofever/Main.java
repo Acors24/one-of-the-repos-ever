@@ -18,6 +18,7 @@ public class Main {
             ArrayList<Command> commands = new ArrayList<>();
             commands.add(helpCommand);
             commands.add(new com.oneofever.commands.Version());
+            commands.add(new com.oneofever.commands.HistoryCommand());
             commands.add(new com.oneofever.commands.SquareCommand());
             commands.add(new com.oneofever.commands.TriangleCommand());
             commands.add(new com.oneofever.commands.RectangleCommand());

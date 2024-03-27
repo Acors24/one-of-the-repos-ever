@@ -2,6 +2,7 @@
 package com.oneofever.commands;
 
 import com.oneofever.Pair;
+import com.oneofever.functions.History;
 import com.oneofever.parsing.Any;
 import com.oneofever.parsing.Argument;
 import com.oneofever.parsing.Fulfillable;
@@ -28,6 +29,7 @@ public class TriangleCommand extends Command {
             System.out.println("side = " + triangle.getSide());
             System.out.println("height = " + triangle.getHeight());
             System.out.println("area = " + triangle.getArea());
+            History.add(name(), triangle);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return;
