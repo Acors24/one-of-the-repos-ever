@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 public interface Fulfillable {
-    public abstract boolean isFulfilled(Hashtable<String, Pair<Integer, ArrayList<Double>>> values);
+    public abstract ArgumentState getState(
+            Hashtable<String, Pair<Integer, ArrayList<Double>>> values);
 
     public abstract Integer getExpectedAmount(String name);
 

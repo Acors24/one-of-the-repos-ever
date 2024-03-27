@@ -13,9 +13,38 @@ public class Any extends ArgumentGroup {
     }
 
     @Override
-    public boolean isFulfilled(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
-        return arguments.stream().filter(argument -> argument.isFulfilled(values)).count()
-                == requiredN;
+    public ArgumentState getState(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
+        long complete = 0;
+        long partial = 0;
+        long empty = 0;
+        long excess = 0;
+
+        for (Fulfillable argument : arguments) {
+            switch (argument.getState(values)) {
+                case COMPLETE -> complete++;
+                case PARTIAL -> partial++;
+                case EMPTY -> empty++;
+                case EXCESS -> excess++;
+            }
+        }
+
+        if (excess != 0 || complete > requiredN) {
+            return ArgumentState.EXCESS;
+        }
+
+        if (complete == requiredN) {
+            if (partial != 0) {
+                return ArgumentState.EXCESS;
+            } else {
+                return ArgumentState.COMPLETE;
+            }
+        } else {
+            if (empty == arguments.size()) {
+                return ArgumentState.EMPTY;
+            } else {
+                return ArgumentState.PARTIAL;
+            }
+        }
     }
 
     @Override

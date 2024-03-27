@@ -10,8 +10,22 @@ public class All extends ArgumentGroup {
     }
 
     @Override
-    public boolean isFulfilled(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
-        return arguments.stream().allMatch(argument -> argument.isFulfilled(values));
+    public ArgumentState getState(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
+        var states = arguments.stream().map(argument -> argument.getState(values));
+
+        if (states.allMatch(state -> state == ArgumentState.COMPLETE)) {
+            return ArgumentState.COMPLETE;
+        }
+
+        if (states.allMatch(state -> state == ArgumentState.EMPTY)) {
+            return ArgumentState.EMPTY;
+        }
+
+        if (states.anyMatch(state -> state == ArgumentState.EXCESS)) {
+            return ArgumentState.EXCESS;
+        }
+
+        return ArgumentState.PARTIAL;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ArgumentHandler {
                         argumentTree.getExpectedAmount(name), new ArrayList<>()));
     }
 
-    public boolean handleValue(Double value) throws IllegalArgumentException {
+    public ArgumentState handleValue(Double value) throws IllegalArgumentException {
         if (currentArgument == null) {
             throw new IllegalArgumentException("Unexpected value: " + value);
         }
@@ -46,7 +46,7 @@ public class ArgumentHandler {
             currentArgument = null;
         }
 
-        return argumentTree.isFulfilled(values);
+        return argumentTree.getState(values);
     }
 
     public Hashtable<String, Pair<Integer, ArrayList<Double>>> values() {

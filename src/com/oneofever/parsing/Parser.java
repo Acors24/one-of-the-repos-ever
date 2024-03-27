@@ -49,11 +49,20 @@ public class Parser {
             }
         }
 
-        if (handler.argumentTree.isFulfilled(handler.values())) {
-            command.run(handler.values());
-        } else {
-            System.out.println("Wrong amount of data.");
-            System.out.println(command.usage());
+        ArgumentState treeState = handler.argumentTree.getState(handler.values());
+
+        switch (treeState) {
+            case COMPLETE:
+                command.run(handler.values());
+                break;
+            case EXCESS:
+                System.out.println("Excess data provided.");
+                System.out.println(command.usage());
+                break;
+            default:
+                System.out.println("Insufficient data provided.");
+                System.out.println(command.usage());
+                break;
         }
     }
 }

@@ -14,8 +14,12 @@ public class Argument implements Fulfillable {
     }
 
     @Override
-    public boolean isFulfilled(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
-        return values.containsKey(name) && values.get(name).b.size() == desiredValueAmount;
+    public ArgumentState getState(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
+        if (values.containsKey(name) && values.get(name).b.size() == desiredValueAmount) {
+            return ArgumentState.COMPLETE;
+        } else {
+            return ArgumentState.EMPTY;
+        }
     }
 
     @Override
