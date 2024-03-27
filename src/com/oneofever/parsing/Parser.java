@@ -14,6 +14,10 @@ public class Parser {
     }
 
     public void parse(String input) throws IllegalArgumentException {
+        if (input.trim().equals("")) {
+            return;
+        }
+
         Iterator<String> split =
                 Arrays.asList(input.toLowerCase().trim().split("\\s+")).stream()
                         .map(str -> str.trim())
