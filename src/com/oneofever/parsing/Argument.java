@@ -15,10 +15,15 @@ public class Argument implements Fulfillable {
 
     @Override
     public ArgumentState getState(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
-        if (values.containsKey(name) && values.get(name).b.size() == desiredValueAmount) {
+        if (!values.containsKey(name)) {
+            return ArgumentState.EMPTY;
+        }
+
+        int collected = values.get(name).b.size();
+        if (collected == desiredValueAmount) {
             return ArgumentState.COMPLETE;
         } else {
-            return ArgumentState.EMPTY;
+            return ArgumentState.PARTIAL;
         }
     }
 

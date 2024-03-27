@@ -11,17 +11,28 @@ public class All extends ArgumentGroup {
 
     @Override
     public ArgumentState getState(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
-        var states = arguments.stream().map(argument -> argument.getState(values));
+        long complete = 0;
+        long empty = 0;
+        long excess = 0;
 
-        if (states.allMatch(state -> state == ArgumentState.COMPLETE)) {
+        for (Fulfillable argument : arguments) {
+            switch (argument.getState(values)) {
+                case COMPLETE -> complete++;
+                case EMPTY -> empty++;
+                case EXCESS -> excess++;
+                default -> {}
+            }
+        }
+
+        if (complete == arguments.size()) {
             return ArgumentState.COMPLETE;
         }
 
-        if (states.allMatch(state -> state == ArgumentState.EMPTY)) {
+        if (empty == arguments.size()) {
             return ArgumentState.EMPTY;
         }
 
-        if (states.anyMatch(state -> state == ArgumentState.EXCESS)) {
+        if (excess != 0) {
             return ArgumentState.EXCESS;
         }
 
