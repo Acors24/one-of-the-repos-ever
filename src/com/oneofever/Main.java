@@ -1,11 +1,10 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever;
 
-import com.oneofever.commands.AbstractCommand;
-import com.oneofever.parser.ParseException;
-import com.oneofever.parser.Parser;
+import com.oneofever.commands.Command;
+import com.oneofever.parsing.Parser;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.completer.StringsCompleter;
@@ -16,7 +15,7 @@ public class Main {
         final String PROMPT = "> ";
         try {
             com.oneofever.commands.Help helpCommand = new com.oneofever.commands.Help();
-            LinkedList<AbstractCommand> commands = new LinkedList<>();
+            ArrayList<Command> commands = new ArrayList<>();
             commands.add(helpCommand);
             commands.add(new com.oneofever.commands.Version());
             commands.add(new com.oneofever.commands.SquareCommand());
@@ -34,22 +33,13 @@ public class Main {
                                                     .map(c -> c.name())
                                                     .toArray(String[]::new)))
                             .build();
-            Parser parser = new Parser(commands);
             String line;
+            Parser parser = new Parser(commands);
             while ((line = lineReader.readLine(PROMPT)) != null) {
-                String[] tokens = line.strip().split(" ");
-                if (tokens.length == 1 && tokens[0].isEmpty()) continue;
-                AbstractCommand parsed = null;
                 try {
-                    parsed = parser.parse(tokens);
-                    parsed.run();
-                } catch (ParseException ex) {
-                    System.out.println(ex.getMessage());
-                    parsed = ex.getCommand();
-                    if (parsed != null) {
-                        String usage = parsed.usage();
-                        if (usage != null) System.out.println(usage);
-                    }
+                    parser.parse(line);
+                } catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
                 }
             }
         } catch (IOException e) {

@@ -1,27 +1,19 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
-import java.util.LinkedList;
+import com.oneofever.Pair;
+import com.oneofever.parsing.All;
+import com.oneofever.parsing.Fulfillable;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
-public class Help extends AbstractCommand {
-    LinkedList<AbstractCommand> commands;
+public class Help extends Command {
 
-    /*
-        @Override
-        public String[] next(String current)
-        {
-            return null;
-        }
+    ArrayList<Command> commands;
 
-        @Override
-        public Integer tokens(String current)
-        {
-            return 0;
-        }
-    */
     @SuppressWarnings("unchecked")
-    public void setCommands(LinkedList<AbstractCommand> commands) {
-        this.commands = (LinkedList<AbstractCommand>) commands.clone();
+    public void setCommands(ArrayList<Command> commands2) {
+        this.commands = (ArrayList<Command>) commands2.clone();
     }
 
     @Override
@@ -35,16 +27,19 @@ public class Help extends AbstractCommand {
     }
 
     @Override
-    public void run() {
-        for (AbstractCommand command : commands) {
+    public String usage() {
+        return "help";
+    }
+
+    @Override
+    public void run(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
+        for (Command command : commands) {
             System.err.println(command.name() + " - " + command.description());
         }
     }
 
     @Override
-    public Help newObject() {
-        Help newInstance = new Help();
-        newInstance.setCommands(commands);
-        return newInstance;
+    public Fulfillable getArgumentTree() {
+        return new All(new Fulfillable[] {});
     }
 }

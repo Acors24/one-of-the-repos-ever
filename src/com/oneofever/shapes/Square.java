@@ -1,70 +1,56 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Pair;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 public class Square extends Shape {
-    public Square(Properties props) throws IllegalArgumentException {
-        this.props = props;
+    Double side;
+    Double diagonal;
+    Double area;
 
-        Double side = null;
-        Double diagonal = null;
-        Double area = null;
+    public Square(Hashtable<String, Pair<Integer, ArrayList<Double>>> values)
+            throws IllegalArgumentException {
+        if (values.containsKey("side")) {
+            side = values.get("side").b.get(0);
 
-        Double[] si = props.getSides();
-        Double[] di = props.getDiagonals();
-        Double ar = props.getArea();
-
-        int i = 0;
-
-        if (si != null) {
-            if (si.length != 1) {
-                throw new IllegalArgumentException("Wrong number of sides.");
+            if (side < 0) {
+                throw new IllegalArgumentException("Side length cannot be negative.");
             }
-            side = si[0];
+
             diagonal = side * Math.sqrt(2);
             area = side * side;
+        } else if (values.containsKey("diagonal")) {
+            diagonal = values.get("diagonal").b.get(0);
 
-            props.setDiagonals(new Double[] {diagonal});
-            props.setArea(area);
-            i++;
-        }
-        if (di != null) {
-            if (di.length != 1) {
-                throw new IllegalArgumentException("Wrong number of diagonals.");
+            if (diagonal < 0) {
+                throw new IllegalArgumentException("Diagonal length cannot be negative.");
             }
-            diagonal = di[0];
+
             side = diagonal / Math.sqrt(2);
             area = side * side;
+        } else if (values.containsKey("area")) {
+            area = values.get("area").b.get(0);
 
-            props.setSides(new Double[] {side});
-            props.setArea(area);
-            i++;
-        }
-        if (ar != null) {
-            area = ar;
+            if (area < 0) {
+                throw new IllegalArgumentException("Area cannot be negative.");
+            }
+
             side = Math.sqrt(area);
             diagonal = side * Math.sqrt(2);
-
-            props.setSides(new Double[] {side});
-            props.setDiagonals(new Double[] {diagonal});
-            i++;
-        }
-        if (i == 0) {
-            throw new IllegalArgumentException("Not enough arguments.");
-        }
-        if (i > 1) {
-            throw new IllegalArgumentException("Too many arguments.");
         }
     }
 
-    public double getSide() {
-        return props.getSides()[0];
+    public Double getSide() {
+        return side;
     }
 
-    public double getDiagonal() {
-        return props.getDiagonals()[0];
+    public Double getDiagonal() {
+        return diagonal;
     }
 
     public Double getArea() {
-        return props.getArea();
+        return area;
     }
 }

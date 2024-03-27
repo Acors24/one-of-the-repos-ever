@@ -1,17 +1,14 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.commands;
 
-import com.oneofever.shapes.Properties;
-import com.oneofever.shapes.Square;
+import com.oneofever.Pair;
+import com.oneofever.parsing.Any;
+import com.oneofever.parsing.Argument;
+import com.oneofever.parsing.Fulfillable;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
-public class SquareCommand extends AbstractCommand {
-
-    public SquareCommand() {
-        argGroups.add(new ArgGroup("side", "Double", 1));
-        argGroups.add(new ArgGroup("diagonal", "Double", 1));
-        argGroups.add(new ArgGroup("area", "Double", 1));
-        groupNumber = 1;
-    }
+public class SquareCommand extends Command {
 
     @Override
     public String name() {
@@ -24,9 +21,9 @@ public class SquareCommand extends AbstractCommand {
     }
 
     @Override
-    public void run() {
+    public void run(Hashtable<String, Pair<Integer, ArrayList<Double>>> values) {
         try {
-            Square square = new Square(toProperties());
+            com.oneofever.shapes.Square square = new com.oneofever.shapes.Square(values);
 
             System.out.println("side = " + square.getSide());
             System.out.println("diagonal = " + square.getDiagonal());
@@ -37,41 +34,11 @@ public class SquareCommand extends AbstractCommand {
         }
     }
 
-    @Override
-    public String usage() {
-        return "Usage:\n"
-                + //
-                "\tsquare {side | diagonal | area} <value>";
-    }
-
-    @Override
-    public Properties toProperties() {
-        Properties props = new Properties();
-        try {
-            for (ArgGroup arg : argGroups) {
-                if (arg.contents.isEmpty()) continue;
-                Object obj = arg.contents.get(0);
-                Double value = null;
-                if (obj != null) {
-                    value = Double.parseDouble((String) obj);
-                }
-                switch (arg.name) {
-                    case "side":
-                        if (value != null) props.setSides(new Double[] {value});
-                        break;
-                    case "diagonal":
-                        if (value != null) props.setDiagonals(new Double[] {value});
-                        break;
-                    case "area":
-                        if (value != null) props.setArea(value);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        } catch (NumberFormatException ex) {
-            System.out.println("Parser failed: " + ex);
-        }
-        return props;
+    public Fulfillable getArgumentTree() {
+        return new Any(
+                1,
+                new Fulfillable[] {
+                    new Argument("side", 1), new Argument("diagonal", 1), new Argument("area", 1)
+                });
     }
 }

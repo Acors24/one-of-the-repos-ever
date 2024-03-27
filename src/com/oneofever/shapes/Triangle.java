@@ -1,70 +1,56 @@
 /* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Pair;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 public class Triangle extends Shape {
-    public Triangle(Properties props) throws IllegalArgumentException {
-        this.props = props;
+    Double side;
+    Double height;
+    Double area;
 
-        Double side = null;
-        Double height = null;
-        Double area = null;
+    public Triangle(Hashtable<String, Pair<Integer, ArrayList<Double>>> values)
+            throws IllegalArgumentException {
+        if (values.containsKey("side")) {
+            side = values.get("side").b.get(0);
 
-        Double[] si = props.getSides();
-        Double[] he = props.getHeights();
-        Double ar = props.getArea();
-
-        int i = 0;
-
-        if (si != null) {
-            if (si.length != 1) {
-                throw new IllegalArgumentException("Wrong number of sides.");
+            if (side < 0) {
+                throw new IllegalArgumentException("Side length cannot be negative.");
             }
-            side = si[0];
+
             height = (side * Math.sqrt(3)) / 2;
-            area = (side * height) / 2;
+            area = side * side;
+        } else if (values.containsKey("height")) {
+            height = values.get("height").b.get(0);
 
-            props.setHeights(new Double[] {height});
-            props.setArea(area);
-            i++;
-        }
-        if (he != null) {
-            if (he.length != 1) {
-                throw new IllegalArgumentException("Wrong number of heights.");
+            if (height < 0) {
+                throw new IllegalArgumentException("Height length cannot be negative.");
             }
-            height = he[0];
+
             side = height * 2 / Math.sqrt(3);
-            area = (side * height) / 2;
+            area = side * side;
+        } else if (values.containsKey("area")) {
+            area = values.get("area").b.get(0);
 
-            props.setSides(new Double[] {side});
-            props.setArea(area);
-            i++;
-        }
-        if (ar != null) {
-            area = ar;
-            side = Math.sqrt(area / Math.sqrt(3)) * 2;
+            if (area < 0) {
+                throw new IllegalArgumentException("Area cannot be negative.");
+            }
+
+            side = Math.sqrt(area);
             height = (side * Math.sqrt(3)) / 2;
-
-            props.setSides(new Double[] {side});
-            props.setHeights(new Double[] {height});
-            i++;
-        }
-        if (i == 0) {
-            throw new IllegalArgumentException("Not enough arguments.");
-        }
-        if (i > 1) {
-            throw new IllegalArgumentException("Too many arguments.");
         }
     }
 
-    public double getSide() {
-        return props.getSides()[0];
+    public Double getSide() {
+        return side;
     }
 
-    public double getHeight() {
-        return props.getHeights()[0];
+    public Double getHeight() {
+        return height;
     }
 
     public Double getArea() {
-        return props.getArea();
+        return area;
     }
 }

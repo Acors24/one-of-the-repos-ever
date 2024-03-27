@@ -1,129 +1,86 @@
-/* (C)2024 - one-of-the-teams-ever */
 package com.oneofever.shapes;
 
+import com.oneofever.Pair;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 public class Rectangle extends Shape {
-    public Rectangle(Properties props) throws IllegalArgumentException {
-        this.props = props;
+    Double side1;
+    Double side2;
+    Double diagonal;
+    Double area;
 
-        Double side_short = null;
-        Double side_long = null;
-        Double diagonal = null;
-        Double area = null;
-
-        Double ss = null;
-        Double sl = null;
-        Double di = null;
-        Double ar = props.getArea();
-
-        Double[] si = props.getSides();
-        Double[] diag = props.getDiagonals();
-        if (diag != null) di = diag[0];
-
-        int i = 0;
-
-        if (si != null) {
-            if (si.length != 2) {
-                throw new IllegalArgumentException("Wrong number of sides.");
-            }
-            ss = si[0];
-            sl = si[1];
-            if (sl != null) {
-                if (di != null) {
-                    // sl and di availble
-                    side_long = sl;
-                    side_short = Math.sqrt(di * di - sl * sl);
-                    area = side_short * side_long;
-                    diagonal = di;
-                    i++;
-                } else if (ar != null) {
-                    // sl and ar availble
-                    side_long = sl;
-                    side_short = ar / sl;
-                    area = ar;
-                    diagonal = Math.sqrt(side_short * side_short + sl * sl);
-                    i++;
-                } else if (ss != null) {
-                    // ss and sl availble
-                    side_short = ss;
-                    side_long = sl;
-                    diagonal = Math.sqrt(ss * ss + sl * sl);
-                    area = sl * ss;
-                    i++;
-                }
-                i++;
-            } else if (ss != null) {
-                if (di != null) {
-                    // ss and di availble
-                    side_short = ss;
-                    side_long = Math.sqrt(di * di - ss * ss);
-                    area = side_short * side_long;
-                    diagonal = di;
-                    i++;
-                } else if (ar != null) {
-                    // ss and ar availble
-                    side_short = ss;
-                    side_long = ar / ss;
-                    diagonal = Math.sqrt(ss * ss + side_long * side_long);
-                    area = ar;
-                    i++;
-                }
-                i++;
-            }
-
-            props.setSides(new Double[] {side_short, side_long});
-            props.setDiagonals(new Double[] {diagonal});
-            props.setArea(area);
-        } else if (ar != null) {
-            if (di != null) {
-                // ar and di availble
-                area = ar;
-                diagonal = di;
-                // ss*ss + sl*sl = di*di
-                // ss * sl = ar
-                side_short =
-                        Math.sqrt(((di * di) + Math.sqrt(di * di * di * di - 4 * ar * ar)) / 2);
-                side_long = ar / side_short;
-
-                if (side_short.isNaN())
-                    throw new IllegalArgumentException("Diagonal is too short.");
-                if (side_short > side_long) {
-                    Double temp = side_short;
-                    side_short = side_long;
-                    side_long = temp;
-                }
-                i++;
-            }
-
-            props.setSides(new Double[] {side_short, side_long});
-            props.setDiagonals(new Double[] {diagonal});
-            props.setArea(area);
-            i++;
-        }
-        if (i < 2) {
-            throw new IllegalArgumentException("Not enough arguments.");
-        }
-        if (i > 2) {
-            throw new IllegalArgumentException("Too many arguments.");
+    public Rectangle(Hashtable<String, Pair<Integer, ArrayList<Double>>> values)
+            throws IllegalArgumentException {
+        if (values.containsKey("side")) {
+            side1 = values.get("side").b.get(0);
         }
 
-        if (side_short > side_long) {
-            throw new IllegalArgumentException("Shorter side is longer than the longer side.");
+        if (values.containsKey("sides")) {
+            side1 = values.get("sides").b.get(0);
+            side2 = values.get("sides").b.get(1);
+        }
+
+        if ((side1 != null && side1 <= 0) || (side2 != null && side2 <= 0)) {
+            throw new IllegalArgumentException("Side length cannot be non-positive.");
+        }
+
+        if (values.containsKey("diagonal")) {
+            diagonal = values.get("diagonal").b.get(0);
+        }
+
+        if (diagonal != null && diagonal < 0) {
+            throw new IllegalArgumentException("Diagonal length cannot be negative.");
+        }
+
+        if (diagonal != null && side1 != null && diagonal < side1) {
+            throw new IllegalArgumentException("Diagonal cannot be shorter than side.");
+        }
+
+        if (values.containsKey("area")) {
+            area = values.get("area").b.get(0);
+        }
+
+        if (area != null && area < 0) {
+            throw new IllegalArgumentException("Area cannot be negative.");
+        }
+
+        if (side1 != null && side2 != null) {
+            diagonal = Math.sqrt(side1 * side1 + side2 * side2);
+            area = side1 * side2;
+        } else if (side1 != null && diagonal != null) {
+            side2 = Math.sqrt(diagonal * diagonal - side1 * side1);
+            area = side1 * side2;
+        } else if (side1 != null) {
+            side2 = area / side1;
+            diagonal = Math.sqrt(side1 * side1 + side2 * side2);
+        } else {
+            side1 =
+                    Math.sqrt(
+                            (diagonal * diagonal
+                                            + Math.sqrt(Math.pow(diagonal, 4) - 4 * area * area))
+                                    / 2.0);
+            side2 = area / side1;
+
+            if (side1.isNaN() || side2.isNaN()) {
+                throw new IllegalArgumentException("Diagonal length is too short.");
+            }
         }
     }
 
-    public double getSideS() {
-        return props.getSides()[0];
+    public Double getSide1() {
+        return side1;
     }
 
-    public double getSideL() {
-        return props.getSides()[1];
+    public Double getSide2() {
+        return side2;
     }
 
-    public double getDiagonal() {
-        return props.getDiagonals()[0];
+    public Double getDiagonal() {
+        return diagonal;
     }
 
     public Double getArea() {
-        return props.getArea();
+        return area;
     }
 }
