@@ -1,6 +1,7 @@
 package com.oneofever.commands;
 
 import com.oneofever.Pair;
+import com.oneofever.functions.History;
 import com.oneofever.parsing.Any;
 import com.oneofever.parsing.Argument;
 import com.oneofever.parsing.Fulfillable;
@@ -28,6 +29,7 @@ public class RhombusCommand extends Command {
             System.out.println("diagonal1 = " + rhombus.getDiagonal1());
             System.out.println("diagonal2 = " + rhombus.getDiagonal2());
             System.out.println("area = " + rhombus.getArea());
+            History.add(name(), rhombus);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return;

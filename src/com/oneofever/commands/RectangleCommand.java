@@ -1,6 +1,7 @@
 package com.oneofever.commands;
 
 import com.oneofever.Pair;
+import com.oneofever.functions.History;
 import com.oneofever.parsing.Any;
 import com.oneofever.parsing.Argument;
 import com.oneofever.parsing.Fulfillable;
@@ -28,6 +29,7 @@ public class RectangleCommand extends Command {
                     "sides = [" + rectangle.getSide1() + ", " + rectangle.getSide2() + "]");
             System.out.println("diagonal = " + rectangle.getDiagonal());
             System.out.println("area = " + rectangle.getArea());
+            History.add(name(), rectangle);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return;
