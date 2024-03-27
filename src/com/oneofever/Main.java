@@ -36,6 +36,10 @@ public class Main {
             String line;
             Parser parser = new Parser(commands);
             while ((line = lineReader.readLine(PROMPT)) != null) {
+                if (line.trim().equals("")) {
+                    continue;
+                }
+
                 try {
                     parser.parse(line);
                 } catch (IllegalArgumentException e) {
