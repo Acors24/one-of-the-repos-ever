@@ -20,7 +20,7 @@ public class Triangle extends Shape {
             }
 
             height = (side * Math.sqrt(3)) / 2;
-            area = side * side;
+            area = side * height / 2.0;
         } else if (values.containsKey("height")) {
             height = values.get("height").b.get(0);
 
@@ -29,7 +29,7 @@ public class Triangle extends Shape {
             }
 
             side = height * 2 / Math.sqrt(3);
-            area = side * side;
+            area = side * height / 2.0;
         } else if (values.containsKey("area")) {
             area = values.get("area").b.get(0);
 
@@ -37,7 +37,7 @@ public class Triangle extends Shape {
                 throw new IllegalArgumentException("Area cannot be negative.");
             }
 
-            side = Math.sqrt(area);
+            side = Math.sqrt(4 * area / Math.sqrt(3));
             height = (side * Math.sqrt(3)) / 2;
         }
     }
